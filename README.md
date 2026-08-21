@@ -63,11 +63,16 @@ Then open `http://127.0.0.1:4173`.
 
 ## Installation in Canvases
 
-Native installation is not claimed yet. Public research did not identify the
-specific Canvases product or a verifiable official API from the supplied task.
-The platform-neutral view model is in
-`src/canvases/jiangsu-standings.js`; it is the integration seam once the App
-documentation or a working example is available.
+The native target is the [Canvases TestFlight
+beta](https://testflight.apple.com/join/65RCk8Xh) by the developer of
+Scriptable. Apple describes the beta as an app for designing widgets and
+updating them through Shortcuts.
+
+Native installation is not claimed yet. The TestFlight landing page does not
+publish the runtime, layout, network, storage, lifecycle, project format, or
+sample code needed to implement a renderer safely. The platform-neutral view
+model is in `src/canvases/jiangsu-standings.js`; it remains the integration seam
+once an App-exported sample or its in-app documentation is available.
 
 ## Development
 
