@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#07100d" />
+    <title>Canvases Sports · 苏超积分榜</title>
+    <link rel="stylesheet" href="./src/ui/styles.css" />
+  </head>
+  <body>
+    <main class="shell" aria-live="polite">
+      <section class="scoreboard" aria-labelledby="league-title">
+        <header class="hero">
+          <div>
+            <p class="eyebrow"><span class="live-dot"></span> JIANGSU · 2026</p>
+            <h1 id="league-title">江苏省城市足球联赛</h1>
+            <p class="subhead">常规赛 · 第 9 场周期</p>
+          </div>
+          <button id="refresh" class="refresh" type="button" aria-label="刷新积分榜">
+            <span aria-hidden="true">↻</span> 刷新
+          </button>
+        </header>
+
+        <div id="status" class="status loading">
+          <span class="spinner" aria-hidden="true"></span>
+          <span>正在更新积分榜…</span>
+        </div>
+
+        <section id="content" class="content" hidden>
+          <div class="meta-row">
+            <div>
+              <span class="meta-label">最后更新</span>
+              <strong id="updated-at">—</strong>
+            </div>
+            <div class="legend">
+              <span><i class="legend-swatch qualified"></i> TOP 8</span>
+              <span><i class="legend-swatch outside"></i> 追赶区</span>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">趋势</th>
+                  <th scope="col" class="team-head">球队</th>
+                  <th scope="col">场</th>
+                  <th scope="col">胜</th>
+                  <th scope="col">平</th>
+                  <th scope="col">负</th>
+                  <th scope="col">进/失</th>
+                  <th scope="col">净胜</th>
+                  <th scope="col" class="points-head">积分</th>
+                </tr>
+              </thead>
+              <tbody id="standings-body"></tbody>
+            </table>
+          </div>
+
+          <footer class="footer-note">
+            <span>13 城 · 78 场常规赛</span>
+            <span id="source-state">官方快照</span>
+          </footer>
+        </section>
+      </section>
+    </main>
+    <script type="module" src="./src/ui/app.js"></script>
+  </body>
+</html>

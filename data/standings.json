@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "league": { "id": "jiangsu-city-football-league", "name": "江苏省城市足球联赛", "shortName": "苏超", "season": 2026 },
+  "updatedAt": "2026-08-15T22:39:00+08:00",
+  "stage": "regular-season",
+  "qualification": { "type": "top", "count": 8, "label": "晋级淘汰赛" },
+  "source": { "name": "江苏省体育局", "type": "official-image", "url": "https://jsstyj.jiangsu.gov.cn/art/2026/8/15/art_93442_11816914.html", "imageUrl": "https://jsstyj.jiangsu.gov.cn/picture/0/f8580b3821bc413eb8659493fb9786ae.jpg", "retrievedAt": "2026-08-21T15:00:00+08:00", "method": "human-reviewed-transcription" },
+  "standings": [
+    { "rank": 1, "previousRank": null, "trend": null, "team": { "id": "wuxi", "name": "无锡", "shortName": "无锡", "logo": null }, "played": 9, "won": 5, "drawn": 3, "lost": 1, "goalsFor": 14, "goalsAgainst": 8, "goalDifference": 6, "points": 18 },
+    { "rank": 2, "previousRank": null, "trend": null, "team": { "id": "yancheng", "name": "盐城", "shortName": "盐城", "logo": null }, "played": 9, "won": 5, "drawn": 2, "lost": 2, "goalsFor": 9, "goalsAgainst": 6, "goalDifference": 3, "points": 17 },
+    { "rank": 3, "previousRank": null, "trend": null, "team": { "id": "changzhou", "name": "常州", "shortName": "常州", "logo": null }, "played": 9, "won": 5, "drawn": 1, "lost": 3, "goalsFor": 13, "goalsAgainst": 7, "goalDifference": 6, "points": 16 },
+    { "rank": 4, "previousRank": null, "trend": null, "team": { "id": "suqian", "name": "宿迁", "shortName": "宿迁", "logo": null }, "played": 9, "won": 4, "drawn": 2, "lost": 3, "goalsFor": 14, "goalsAgainst": 11, "goalDifference": 3, "points": 14 },
+    { "rank": 5, "previousRank": null, "trend": null, "team": { "id": "xuzhou", "name": "徐州", "shortName": "徐州", "logo": null }, "played": 8, "won": 4, "drawn": 2, "lost": 2, "goalsFor": 10, "goalsAgainst": 4, "goalDifference": 6, "points": 14 },
+    { "rank": 6, "previousRank": null, "trend": null, "team": { "id": "suzhou", "name": "苏州", "shortName": "苏州", "logo": null }, "played": 9, "won": 3, "drawn": 4, "lost": 2, "goalsFor": 11, "goalsAgainst": 9, "goalDifference": 2, "points": 13 },
+    { "rank": 7, "previousRank": null, "trend": null, "team": { "id": "nantong", "name": "南通", "shortName": "南通", "logo": null }, "played": 9, "won": 3, "drawn": 4, "lost": 2, "goalsFor": 7, "goalsAgainst": 8, "goalDifference": -1, "points": 13 },
+    { "rank": 8, "previousRank": null, "trend": null, "team": { "id": "yangzhou", "name": "扬州", "shortName": "扬州", "logo": null }, "played": 9, "won": 3, "drawn": 3, "lost": 3, "goalsFor": 6, "goalsAgainst": 7, "goalDifference": -1, "points": 12 },
+    { "rank": 9, "previousRank": null, "trend": null, "team": { "id": "nanjing", "name": "南京", "shortName": "南京", "logo": null }, "played": 9, "won": 3, "drawn": 3, "lost": 3, "goalsFor": 6, "goalsAgainst": 6, "goalDifference": 0, "points": 12 },
+    { "rank": 10, "previousRank": null, "trend": null, "team": { "id": "taizhou", "name": "泰州", "shortName": "泰州", "logo": null }, "played": 8, "won": 3, "drawn": 2, "lost": 3, "goalsFor": 8, "goalsAgainst": 10, "goalDifference": -2, "points": 11 },
+    { "rank": 11, "previousRank": null, "trend": null, "team": { "id": "huaian", "name": "淮安", "shortName": "淮安", "logo": null }, "played": 8, "won": 2, "drawn": 1, "lost": 5, "goalsFor": 7, "goalsAgainst": 11, "goalDifference": -4, "points": 7 },
+    { "rank": 12, "previousRank": null, "trend": null, "team": { "id": "lianyungang", "name": "连云港", "shortName": "连云港", "logo": null }, "played": 9, "won": 0, "drawn": 4, "lost": 5, "goalsFor": 3, "goalsAgainst": 10, "goalDifference": -7, "points": 4 },
+    { "rank": 13, "previousRank": null, "trend": null, "team": { "id": "zhenjiang", "name": "镇江", "shortName": "镇江", "logo": null }, "played": 9, "won": 1, "drawn": 1, "lost": 7, "goalsFor": 5, "goalsAgainst": 16, "goalDifference": -11, "points": 4 }
+  ]
+}
