@@ -16,7 +16,7 @@ export function validateStandings(data) {
   if (!data || typeof data !== "object") throw new ValidationError(["root must be an object"]);
   if (!data.league || typeof data.league !== "object") issues.push("league is required");
   if (!Number.isInteger(data?.league?.season)) issues.push("league.season must be an integer");
-  if (!Number.isNaN(Date.parse(data.updatedAt)) === false) issues.push("updatedAt must be ISO-8601");
+  if (Number.isNaN(Date.parse(data.updatedAt))) issues.push("updatedAt must be ISO-8601");
   if (data?.qualification?.type !== "top" || !Number.isInteger(data?.qualification?.count)) {
     issues.push("qualification must define an integer top count");
   }
