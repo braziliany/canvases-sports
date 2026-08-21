@@ -2,8 +2,12 @@
 
 ## v0.1 — 江苏省城市足球联赛积分榜
 
-- 数据层、统一 Schema、TOP 8、缓存与参考 UI
-- 原生 Canvases 接入与真机验证（完成标准的一部分，当前待办）
+- ✅ GitHub Data + Unified Schema + Validation
+- ✅ Shortcut 与 Canvases Grid Template 实施规范
+- ✅ Web Reference Renderer（调试 / 校验 / 桌面预览）
+- ⏳ iPhone 创建 Shortcut + Canvas + Home Screen Widget
+- ⏳ 正常网络、断网、无效 JSON 和 Widget 延迟真机验证
+- ⏳ Canvas Share Link + Shortcut Share Link
 
 ## v0.2 — LPL 排名
 

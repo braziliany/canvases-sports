@@ -18,7 +18,7 @@ focuses exclusively on the 2026 Jiangsu City Football League (苏超).
 - Manual refresh and refresh-on-open
 - Local browser cache with offline fallback
 - Strict validation and non-crashing error states
-- Platform-neutral Canvas view model
+- A Shortcuts-driven Canvases implementation specification
 - Responsive dark web reference UI
 
 ## Data source
@@ -36,14 +36,14 @@ instead of being fabricated.
 
 ```text
 Official standings image
-        ↓ reviewed transcription
-Jiangsu adapter
+        ↓ human-reviewed transcription
+Jiangsu Adapter
         ↓
-Unified standings schema
+Unified Schema + Validation
         ↓
-Validated JSON
-        ↓
-Cache → Canvas view model → Web reference UI
+data/standings.json
+        ├─→ iOS Shortcut → Canvases Grid Template → Home Screen Widget
+        └─→ Web Reference Renderer (debug, validation, desktop preview)
 ```
 
 The adapter boundary is intentionally reusable; another league can later emit
@@ -65,14 +65,32 @@ Then open `http://127.0.0.1:4173`.
 
 The native target is the [Canvases TestFlight
 beta](https://testflight.apple.com/join/65RCk8Xh) by the developer of
-Scriptable. Apple describes the beta as an app for designing widgets and
-updating them through Shortcuts.
+Scriptable. Its official workflow uses a visual editor for widget layout and
+Shortcuts actions for live updates; there is no in-app code runtime.
 
-Native installation is not claimed yet. The TestFlight landing page does not
-publish the runtime, layout, network, storage, lifecycle, project format, or
-sample code needed to implement a renderer safely. The platform-neutral view
-model is in `src/canvases/jiangsu-standings.js`; it remains the integration seam
-once an App-exported sample or its in-app documentation is available.
+The repository provides a device-build specification:
+
+- [Canvas Grid Template](docs/canvas-template.md)
+- [Shortcut build guide](docs/shortcut.md)
+
+The Shortcut reads the public, stable JSON contract at:
+
+```text
+https://raw.githubusercontent.com/braziliany/canvases-sports/main/data/standings.json
+```
+
+Creating the real Canvas, Shortcut, widget, and share links remains an iPhone
+step. Those steps are not claimed complete until device evidence is recorded.
+
+## Canvases Native vs Web Reference
+
+**Canvases Native** is the production target: a Medium Home Screen Widget built
+in the visual editor with a one-column Grid and Template Children, updated by
+the `Canvases Sports · 更新苏超` Shortcut.
+
+**Web Reference** (`index.html`) is only for data debugging, View Model
+validation, and desktop preview. Browser `fetch` and `localStorage` are not part
+of the Canvases architecture.
 
 ## Development
 
@@ -80,12 +98,13 @@ once an App-exported sample or its in-app documentation is available.
 is the stable client contract. Edit the source snapshot after checking the
 official image, then run `npm run validate` and `npm test`.
 
-## Screenshot
+## Screenshots
 
-Generate or capture one after running the reference UI. A screenshot is not
-checked in until the layout is verified in a browser.
+The native screenshot directory will be `assets/screenshots/`. No device image
+will be committed until it has been reviewed for private status-bar or other
+sensitive information.
 
 ## Roadmap
 
-See [docs/Roadmap.md](docs/Roadmap.md). Native Canvases verification and a
-maintainable official-data ingestion path come before adding another league.
+See [docs/Roadmap.md](docs/Roadmap.md). Device construction and verification of
+the Shortcut + Grid Template workflow come before adding another league.
