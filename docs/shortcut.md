@@ -1,5 +1,7 @@
 # Canvases Sports · 更新苏超 Shortcut
 
+> v0.1 真机验证结论以 [Dynamic Standings PoC 归档](v0.1-dynamic-standings-poc.md) 为准。本页较丰富的 Header、TOP 8、校验、自动化和失败策略属于后续增强，不在 v0.1 冻结完成范围内。
+
 ## 目标
 
 创建 iOS Shortcut：`Canvases Sports · 更新苏超`。它从公开 GitHub Raw JSON 获取经校验的积分榜，构建 13 个 `team-row` 模板实例，并一次性写入 `standings-grid`。
@@ -68,7 +70,7 @@ Update Header Views
 
 ## 4. 构建球队行
 
-创建空变量 `Rendered Rows`，然后 `Repeat with Each` standings：
+使用 `Repeat with Each` standings。每轮最后一个动作必须输出 Final Updated View，使 Shortcuts 自动形成 `Repeat Results`：
 
 1. 读取 Repeat Item 的 `rank`。
 2. 读取 `team` Dictionary，再读取 `team.name`。
@@ -78,28 +80,29 @@ Update Header Views
    - Canvas：`苏超`
    - Grid：`standings-grid`
    - Template：`team-row`
-6. 对该 Created View 连续使用 `Update View Created from Template`：
-   - View `rank` → Text = rank；
-   - View `team-name` → Text = team.name；
-   - View `goal-difference` → Text = 格式化后的净胜球；
-   - View `points` → Text = points。
+6. 对该 Created View 连续使用 `Update View Created from Template`。**每一步必须把前一个 Update 输出的 View 显式作为下一步输入**：
+   - Created View → View `rank` → Text = rank；
+   - Updated rank View → View `team-name` → Text = team.name；
+   - Updated team-name View → View `goal-difference` → Text = 格式化后的净胜球；
+   - Updated goal-difference View → View `points` → Text = points；
+   - Updated points View = 本轮 Final Updated View。
 7. TOP 8：
    - 如果 rank = 8：View `qualification-label` → Text = `TOP 8 · 晋级区`，Visible = true；
    - 否则：View `qualification-label` → Visible = false。
-8. 把本次 `team-row` 根 Created View 使用 `Add to Variable` 加入 `Rendered Rows`。
+8. 让本轮 Repeat 的最终输出为 Final Updated View，使 `Repeat Results` 成为全部最终根 View 的列表。若采用显式变量收集，也只能收集 Final Updated View，不能收集初始 Created View。
 
-不要依赖最后一个 Text 更新动作作为 Repeat 输出；显式收集每个 `team-row` 根 View，避免 Children 得到错误对象。
+动作在界面中上下相邻不等于 View 引用已经链好。务必逐个检查后一个 Update 的 View 参数是否来自前一个 Update 的输出。
 
 ## 5. 原子替换 Grid
 
-Repeat 完成后再次确认 `Rendered Rows` Count = 13，然后：
+Repeat 完成后再次确认 `Repeat Results` Count = 13，然后：
 
 ```text
 Update View
 Canvas: 苏超
 View: standings-grid
 Property: Children
-Value: Rendered Rows
+Value: Repeat Results
 ```
 
 先完整构建、后一次替换可避免网络或中途数据错误导致 Widget 只显示半张表。

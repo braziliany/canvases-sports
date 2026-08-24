@@ -3,15 +3,16 @@
 ## v0.1 — 江苏省城市足球联赛积分榜
 
 - ✅ GitHub Data + Unified Schema + Validation
-- ✅ Shortcut 与 Canvases Grid Template 实施规范
+- ✅ Shortcut 与 Canvases Grid Template 真机闭环
+- ✅ 13 行 Template 动态生成与链式 View Update
+- ✅ Repeat Results → `standings-grid.Children` → Widget
 - ✅ Web Reference Renderer（调试 / 校验 / 桌面预览）
-- ⏳ iPhone 创建 Shortcut + Canvas + Home Screen Widget
-- ⏳ 正常网络、断网、无效 JSON 和 Widget 延迟真机验证
-- ⏳ Canvas Share Link + Shortcut Share Link
 
-## v0.2 — LPL 排名
+状态：**Canvases Sports v0.1 Dynamic Standings PoC COMPLETE**。
 
-仅在 v0.1 真机稳定后启动。
+## v0.2 — Dynamic Fixtures
+
+动态赛程列表，计划复用 `Repeat Each → Create View → Chained Update → Repeat Results → Grid.Children`。当前仅记录入口，尚未开始实现。
 
 ## v0.3 — 赛事入口页
 

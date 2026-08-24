@@ -8,6 +8,7 @@ focuses exclusively on the 2026 Jiangsu City Football League (苏超).
 ## Current support
 
 - ✅ 江苏省城市足球联赛（2026 常规赛）
+- ✅ [v0.1 Dynamic Standings PoC](docs/v0.1-dynamic-standings-poc.md)：真机验证完成
 - ⏳ LPL（roadmap only; no implementation in v0.1）
 
 ## What is included
@@ -79,8 +80,13 @@ The Shortcut reads the public, stable JSON contract at:
 https://raw.githubusercontent.com/braziliany/canvases-sports/main/data/standings.json
 ```
 
-Creating the real Canvas, Shortcut, widget, and share links remains an iPhone
-step. Those steps are not claimed complete until device evidence is recorded.
+The core v0.1 flow has been verified on an iPhone: 13 Template instances are
+created dynamically, updated through a chained View pipeline, collected as
+Repeat Results, and written to `standings-grid.Children`. See the
+[frozen PoC record](docs/v0.1-dynamic-standings-poc.md).
+
+The richer header, TOP 8 styling, refresh automation, failure UI, and sharing
+ideas in the device-build specifications are outside the frozen v0.1 PoC.
 
 ## Canvases Native vs Web Reference
 
@@ -106,5 +112,5 @@ sensitive information.
 
 ## Roadmap
 
-See [docs/Roadmap.md](docs/Roadmap.md). Device construction and verification of
-the Shortcut + Grid Template workflow come before adding another league.
+See [docs/Roadmap.md](docs/Roadmap.md). The next milestone is v0.2 Dynamic
+Fixtures; it is documented as an entry point only and has not started.

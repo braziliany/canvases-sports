@@ -2,6 +2,8 @@
 
 > 目标：在 Canvases Visual Editor 中创建 `苏超` Canvas，优先适配 Medium Home Screen Widget。能力名称来自用户提供的官方 User Guide 摘要；属性在不同 Beta 版本中的具体面板位置以真机为准。
 
+> 已冻结的 v0.1 真机 PoC 只验证 `standings-grid → team-row → rank / team-name / goal-difference / points`。本页 Header 与 `qualification-label` 是扩展设计，不属于 v0.1 完成声明。详见 [v0.1 归档](v0.1-dynamic-standings-poc.md)。
+
 ## 1. Canvas 与根结构
 
 创建 Canvas：`苏超`。
