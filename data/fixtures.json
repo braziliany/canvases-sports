@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "league": {
+    "id": "jiangsu-city-football-league",
+    "name": "江苏省城市足球联赛",
+    "shortName": "苏超",
+    "season": 2026
+  },
+  "updatedAt": "2026-08-22T11:48:00+08:00",
+  "source": {
+    "name": "江苏省城市足球联赛组委会",
+    "type": "official-announcement",
+    "url": "https://www.xhby.net/content/s6a891c1fe4b01de36f048d8d.html",
+    "publishedAt": "2026-08-22T11:48:00+08:00",
+    "method": "human-reviewed-transcription",
+    "scope": "2026常规赛第19周（8月29日）三场比赛",
+    "timeReferenceUrl": "https://suchao.crazy-thursday.com/",
+    "notes": "公告确认日期和对阵；19:40开球时间由公开完整赛历交叉核验；公告未列场馆，venue 保留 null。"
+  },
+  "fixtures": [
+    {
+      "id": "2026-regular-w19-changzhou-wuxi",
+      "round": 19,
+      "date": "2026-08-29",
+      "time": "19:40",
+      "homeTeam": "常州",
+      "awayTeam": "无锡",
+      "homeScore": null,
+      "awayScore": null,
+      "status": "scheduled",
+      "venue": null
+    },
+    {
+      "id": "2026-regular-w19-huaian-lianyungang",
+      "round": 19,
+      "date": "2026-08-29",
+      "time": "19:40",
+      "homeTeam": "淮安",
+      "awayTeam": "连云港",
+      "homeScore": null,
+      "awayScore": null,
+      "status": "scheduled",
+      "venue": null
+    },
+    {
+      "id": "2026-regular-w19-yangzhou-suqian",
+      "round": 19,
+      "date": "2026-08-29",
+      "time": "19:40",
+      "homeTeam": "扬州",
+      "awayTeam": "宿迁",
+      "homeScore": null,
+      "awayScore": null,
+      "status": "scheduled",
+      "venue": null
+    }
+  ]
+}

@@ -2,7 +2,17 @@
 
 ## [Unreleased]
 
-- Next milestone documented: v0.2 Dynamic Fixtures (not started)
+### Added
+
+- v0.2 Dynamic Fixtures Phase 1 data contract
+- `data/fixtures.json` with three human-reviewed week-19 fixtures
+- Fixtures Schema validation, chronological sorting, and Jiangsu status mapping
+- Offline fixtures tests and `docs/v0.2-dynamic-fixtures.md`
+
+### Changed
+
+- `npm run validate` now checks standings and fixtures contracts
+- v0.2 is marked data-ready; Canvas, Shortcut, and device work remain pending
 
 ## [0.1.0] - 2026-08-24
 

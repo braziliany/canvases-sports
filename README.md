@@ -2,13 +2,15 @@
 
 Sports dashboards built for Canvases.
 
-Canvases Sports is a small, testable sports information panel. Version 0.1
-focuses exclusively on the 2026 Jiangsu City Football League (苏超).
+Canvases Sports is a small, testable sports information panel for the 2026
+Jiangsu City Football League (苏超). v0.1 proves dynamic standings; v0.2 starts
+the reusable dynamic-fixtures data layer.
 
 ## Current support
 
 - ✅ 江苏省城市足球联赛（2026 常规赛）
 - ✅ [v0.1 Dynamic Standings PoC](docs/v0.1-dynamic-standings-poc.md)：真机验证完成
+- ✅ [v0.2 Dynamic Fixtures Phase 1](docs/v0.2-dynamic-fixtures.md)：数据层、Schema 与测试完成
 - ⏳ LPL（roadmap only; no implementation in v0.1）
 
 ## What is included
@@ -21,6 +23,7 @@ focuses exclusively on the 2026 Jiangsu City Football League (苏超).
 - Strict validation and non-crashing error states
 - A Shortcuts-driven Canvases implementation specification
 - Responsive dark web reference UI
+- A validated `data/fixtures.json` contract and Jiangsu fixture status mapping
 
 ## Data source
 
@@ -45,6 +48,13 @@ Unified Schema + Validation
 data/standings.json
         ├─→ iOS Shortcut → Canvases Grid Template → Home Screen Widget
         └─→ Web Reference Renderer (debug, validation, desktop preview)
+
+Official fixture announcements
+        ↓ human-reviewed transcription
+Fixtures Schema + Validation
+        ↓
+data/fixtures.json
+        └─→ Future Shortcut → match-row Template → Widget
 ```
 
 The adapter boundary is intentionally reusable; another league can later emit
@@ -100,9 +110,10 @@ of the Canvases architecture.
 
 ## Development
 
-`data/sources/` contains source-shaped snapshots, while `data/standings.json`
-is the stable client contract. Edit the source snapshot after checking the
-official image, then run `npm run validate` and `npm test`.
+`data/sources/` contains source-shaped standings snapshots.
+`data/standings.json` and `data/fixtures.json` are stable client contracts.
+Fixtures are transcribed only from reviewed sources; unknown venues remain
+`null`. Run `npm run validate` and `npm test` after every data change.
 
 ## Screenshots
 
@@ -112,5 +123,5 @@ sensitive information.
 
 ## Roadmap
 
-See [docs/Roadmap.md](docs/Roadmap.md). The next milestone is v0.2 Dynamic
-Fixtures; it is documented as an entry point only and has not started.
+See [docs/Roadmap.md](docs/Roadmap.md). v0.2 Dynamic Fixtures Phase 1 is ready;
+Canvas, Shortcut, and device work have intentionally not started.

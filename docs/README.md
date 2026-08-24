@@ -7,6 +7,7 @@
 - [Canvas Grid Template](canvas-template.md)
 - [Shortcut 构建指南](shortcut.md)
 - [v0.1 Dynamic Standings PoC 归档](v0.1-dynamic-standings-poc.md)
+- [v0.2 Dynamic Fixtures Phase 1](v0.2-dynamic-fixtures.md)
 - [开发日志](开发日志.md)
 - [决策记录](决策记录.md)
 - [Roadmap](Roadmap.md)

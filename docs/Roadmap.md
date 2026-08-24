@@ -12,7 +12,17 @@
 
 ## v0.2 — Dynamic Fixtures
 
-动态赛程列表，计划复用 `Repeat Each → Create View → Chained Update → Repeat Results → Grid.Children`。当前仅记录入口，尚未开始实现。
+### Phase 1 · Data Layer
+
+- ✅ 官方赛程来源调查与人工复核流程
+- ✅ Fixtures Schema 与统一状态映射
+- ✅ `data/fixtures.json`（第 19 周首批 3 场）
+- ✅ ID、日期、时间、球队、比分状态与排序校验
+- ✅ 完全离线的 fixtures 测试
+- ✅ Shortcut / `match-row` / View IDs 文档预留
+- ⏳ Canvas、Shortcut、真机 UI（不属于 Phase 1）
+
+继续复用 `Repeat Each → Create View → Chained Update → Repeat Results → Grid.Children`，不设计第二套动态列表机制。
 
 ## v0.3 — 赛事入口页
 
