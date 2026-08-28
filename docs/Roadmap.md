@@ -19,10 +19,14 @@
 - ✅ `data/fixtures.json`（第 19 周首批 3 场）
 - ✅ ID、日期、时间、球队、比分状态与排序校验
 - ✅ 完全离线的 fixtures 测试
-- ✅ Shortcut / `match-row` / View IDs 文档预留
-- ⏳ Canvas、Shortcut、真机 UI（不属于 Phase 1）
+- ✅ Shortcut / `match-row` / View IDs
+- ✅ 六状态设备测试夹具
+- ✅ 状态映射与比分容错真机验证
+- ✅ 状态/比分解耦与 Less is More 原则归档
 
 继续复用 `Repeat Each → Create View → Chained Update → Repeat Results → Grid.Children`，不设计第二套动态列表机制。
+
+状态：**Canvases Sports v0.2 Dynamic Fixtures COMPLETE**。
 
 ## v0.3 — 赛事入口页
 

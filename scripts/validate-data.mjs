@@ -10,5 +10,8 @@ validateStandings(published);
 if (JSON.stringify(adapted) !== JSON.stringify(published)) throw new Error("Published JSON is out of sync with the source adapter");
 const fixtures = JSON.parse(await readFile(new URL("../data/fixtures.json", import.meta.url), "utf8"));
 validateFixtures(fixtures);
+const deviceFixtures = JSON.parse(await readFile(new URL("../data/fixtures-device-test.json", import.meta.url), "utf8"));
+validateFixtures(deviceFixtures);
 console.log(`Validated ${published.standings.length} teams; snapshot ${published.updatedAt}`);
 console.log(`Validated ${fixtures.fixtures.length} fixtures; snapshot ${fixtures.updatedAt}`);
+console.log(`Validated ${deviceFixtures.fixtures.length} synthetic device fixtures; matrix ${deviceFixtures.updatedAt}`);

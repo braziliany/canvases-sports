@@ -11,9 +11,27 @@ import { mapJiangsuFixtureStatus } from "../src/leagues/jiangsu/fixture-status.j
 const fixtureData = JSON.parse(
   await readFile(new URL("../data/fixtures.json", import.meta.url), "utf8")
 );
+const deviceFixtureData = JSON.parse(
+  await readFile(new URL("../data/fixtures-device-test.json", import.meta.url), "utf8")
+);
 
 test("fixtures.json passes the fixtures schema", () => {
   assert.equal(validateFixtures(fixtureData).fixtures.length, 3);
+});
+
+test("device fixture covers the device status and score matrix", () => {
+  const fixtures = validateFixtures(deviceFixtureData).fixtures;
+  assert.deepEqual(
+    fixtures.map(({ status, homeScore, awayScore }) => [status, homeScore, awayScore]),
+    [
+      ["scheduled", null, null],
+      ["live", 1, 0],
+      ["finished", 2, 2],
+      ["postponed", null, null],
+      ["cancelled", null, null],
+      ["live", null, null]
+    ]
+  );
 });
 
 test("rejects duplicate fixture ids", () => {

@@ -3,14 +3,14 @@
 Sports dashboards built for Canvases.
 
 Canvases Sports is a small, testable sports information panel for the 2026
-Jiangsu City Football League (苏超). v0.1 proves dynamic standings; v0.2 starts
-the reusable dynamic-fixtures data layer.
+Jiangsu City Football League (苏超). v0.1 proves dynamic standings; v0.2
+completes the reusable dynamic-fixtures data layer and device status matrix.
 
 ## Current support
 
 - ✅ 江苏省城市足球联赛（2026 常规赛）
 - ✅ [v0.1 Dynamic Standings PoC](docs/v0.1-dynamic-standings-poc.md)：真机验证完成
-- ✅ [v0.2 Dynamic Fixtures Phase 1](docs/v0.2-dynamic-fixtures.md)：数据层、Schema 与测试完成
+- ✅ [v0.2 Dynamic Fixtures](docs/v0.2-dynamic-fixtures.md)：数据层与真机状态矩阵验证完成
 - ⏳ LPL（roadmap only; no implementation in v0.1）
 
 ## What is included
@@ -24,6 +24,7 @@ the reusable dynamic-fixtures data layer.
 - A Shortcuts-driven Canvases implementation specification
 - Responsive dark web reference UI
 - A validated `data/fixtures.json` contract and Jiangsu fixture status mapping
+- A synthetic device fixture for status and score rendering verification
 
 ## Data source
 
@@ -54,7 +55,7 @@ Official fixture announcements
 Fixtures Schema + Validation
         ↓
 data/fixtures.json
-        └─→ Future Shortcut → match-row Template → Widget
+        └─→ iOS Shortcut → match-row Template → Widget
 ```
 
 The adapter boundary is intentionally reusable; another league can later emit
@@ -112,6 +113,8 @@ of the Canvases architecture.
 
 `data/sources/` contains source-shaped standings snapshots.
 `data/standings.json` and `data/fixtures.json` are stable client contracts.
+`data/fixtures-device-test.json` is synthetic device-test data and is never the
+production Shortcut default.
 Fixtures are transcribed only from reviewed sources; unknown venues remain
 `null`. Run `npm run validate` and `npm test` after every data change.
 
@@ -123,5 +126,5 @@ sensitive information.
 
 ## Roadmap
 
-See [docs/Roadmap.md](docs/Roadmap.md). v0.2 Dynamic Fixtures Phase 1 is ready;
-Canvas, Shortcut, and device work have intentionally not started.
+See [docs/Roadmap.md](docs/Roadmap.md). v0.2 Dynamic Fixtures status and score
+rendering have been verified on-device.

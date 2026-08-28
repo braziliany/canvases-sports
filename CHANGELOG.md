@@ -8,11 +8,15 @@
 - `data/fixtures.json` with three human-reviewed week-19 fixtures
 - Fixtures Schema validation, chronological sorting, and Jiangsu status mapping
 - Offline fixtures tests and `docs/v0.2-dynamic-fixtures.md`
+- Synthetic six-case device status matrix fixture
+- On-device status mapping, score rendering, and missing-score verification
+- ADR-007 for decoupled status/score rendering and Less is More
 
 ### Changed
 
 - `npm run validate` now checks standings and fixtures contracts
-- v0.2 is marked data-ready; Canvas, Shortcut, and device work remain pending
+- `npm run validate` also checks the synthetic device fixture
+- v0.2 is marked complete after the device status matrix passed
 
 ## [0.1.0] - 2026-08-24
 
