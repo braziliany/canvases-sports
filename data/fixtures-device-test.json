@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "league": {
+    "id": "jiangsu-city-football-league",
+    "name": "江苏省城市足球联赛",
+    "shortName": "苏超",
+    "season": 2026
+  },
+  "updatedAt": "2026-08-29T18:00:00+08:00",
+  "source": {
+    "name": "Canvases Sports device status matrix",
+    "type": "synthetic-device-test",
+    "method": "manually-authored-test-fixture",
+    "scope": "v0.2 Fixtures 真机状态矩阵",
+    "notes": "仅用于 Canvases 与 Shortcuts 真机测试；所有对阵、时间和比分均为合成数据，不得作为正式赛程发布。"
+  },
+  "fixtures": [
+    {
+      "id": "device-test-scheduled",
+      "round": 19,
+      "date": "2026-08-29",
+      "time": "18:00",
+      "homeTeam": "南京",
+      "awayTeam": "无锡",
+      "homeScore": null,
+      "awayScore": null,
+      "status": "scheduled",
+      "venue": null
+    },
+    {
+      "id": "device-test-live-with-score",
+      "round": 19,
+      "date": "2026-08-29",
+      "time": "18:10",
+      "homeTeam": "常州",
+      "awayTeam": "苏州",
+      "homeScore": 1,
+      "awayScore": 0,
+      "status": "live",
+      "venue": "真机测试场馆 A"
+    },
+    {
+      "id": "device-test-finished",
+      "round": 19,
+      "date": "2026-08-29",
+      "time": "18:20",
+      "homeTeam": "盐城",
+      "awayTeam": "南通",
+      "homeScore": 2,
+      "awayScore": 2,
+      "status": "finished",
+      "venue": "真机测试场馆 B"
+    },
+    {
+      "id": "device-test-postponed",
+      "round": 19,
+      "date": "2026-08-29",
+      "time": "18:30",
+      "homeTeam": "徐州",
+      "awayTeam": "宿迁",
+      "homeScore": null,
+      "awayScore": null,
+      "status": "postponed",
+      "venue": null
+    },
+    {
+      "id": "device-test-cancelled",
+      "round": 19,
+      "date": "2026-08-29",
+      "time": "18:40",
+      "homeTeam": "淮安",
+      "awayTeam": "连云港",
+      "homeScore": null,
+      "awayScore": null,
+      "status": "cancelled",
+      "venue": null
+    },
+    {
+      "id": "device-test-live-without-score",
+      "round": 19,
+      "date": "2026-08-29",
+      "time": "18:50",
+      "homeTeam": "扬州",
+      "awayTeam": "泰州",
+      "homeScore": null,
+      "awayScore": null,
+      "status": "live",
+      "venue": "真机测试场馆 C"
+    }
+  ]
+}
