@@ -24,6 +24,8 @@
 - ✅ 状态映射与比分容错真机验证
 - ✅ 状态/比分解耦与 Less is More 原则归档
 - ✅ Effective Match Status 与 2026-08-29 20:53 实战回归
+- ✅ Finished fixtures → standings 的确定性结算层
+- ⏳ 完整历史 fixtures、公平竞赛积分与抽签顺序
 
 继续复用 `Repeat Each → Create View → Chained Update → Repeat Results → Grid.Children`，不设计第二套动态列表机制。
 

@@ -25,6 +25,7 @@ completes the reusable dynamic-fixtures data layer and device status matrix.
 - Responsive dark web reference UI
 - A validated `data/fixtures.json` contract and Jiangsu fixture status mapping
 - A deterministic effective-status normalizer for kickoff transitions
+- A deterministic finished-result-to-standings calculator
 - A synthetic device fixture for status and score rendering verification
 
 ## Data source
@@ -56,7 +57,8 @@ Official fixture announcements
 Fixtures Schema + Validation + Effective Status Normalizer
         ↓
 data/fixtures.json
-        └─→ iOS Shortcut → match-row Template → Widget
+        ├─→ iOS Shortcut → match-row Template → Widget
+        └─→ Standings Calculator → data/standings.json → standings Shortcut
 ```
 
 The adapter boundary is intentionally reusable; another league can later emit
@@ -70,6 +72,7 @@ Requires Node.js 20 or newer.
 npm test
 npm run validate
 npm run fixtures:normalize
+npm run standings:build
 npm run dev
 ```
 
@@ -119,6 +122,9 @@ of the Canvases architecture.
 production Shortcut default.
 Fixtures retain source `status`; the Shortcut displays normalized
 `effectiveStatus`. Time may derive `scheduled → live`, never `live → finished`.
+Only fixtures with source `status: finished` and two real scores enter standings
+settlement. The current builder uses the official 2026-08-15 standings snapshot
+as a temporary historical baseline until full-season fixtures are backfilled.
 Fixtures are transcribed only from reviewed sources; unknown venues remain
 `null`. Run `npm run validate` and `npm test` after every data change.
 

@@ -14,6 +14,9 @@
 - Effective match status normalizer and deterministic kickoff regression tests
 - `effectiveStatus` / `effectiveStatusAt` in the fixtures contract
 - ADR-008 documenting explicit-state precedence and the Shortcut renderer boundary
+- Deterministic match-result settlement and standings build command
+- Official tie-break handling with explicit failure for missing fair-play/draw data
+- ADR-009 documenting fixtures as the result source of truth
 
 ### Changed
 
@@ -22,6 +25,7 @@
 - v0.2 is marked complete after the device status matrix passed
 - Production fixtures expose `live` as the effective status for the three
   2026-08-29 19:40 matches at the 20:53 regression instant
+- Standings validation now compares the published table with calculator output
 
 ## [0.1.0] - 2026-08-24
 

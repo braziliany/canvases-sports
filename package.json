@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "node scripts/dev-server.mjs",
     "fixtures:normalize": "node scripts/normalize-fixtures.mjs",
+    "standings:build": "node scripts/build-standings.mjs",
     "test": "node --test",
     "validate": "node scripts/validate-data.mjs"
   },
