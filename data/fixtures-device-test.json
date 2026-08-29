@@ -7,6 +7,7 @@
     "season": 2026
   },
   "updatedAt": "2026-08-29T18:00:00+08:00",
+  "effectiveStatusAt": "2026-08-29T09:59:00.000Z",
   "source": {
     "name": "Canvases Sports device status matrix",
     "type": "synthetic-device-test",
@@ -25,6 +26,7 @@
       "homeScore": null,
       "awayScore": null,
       "status": "scheduled",
+      "effectiveStatus": "scheduled",
       "venue": null
     },
     {
@@ -37,6 +39,7 @@
       "homeScore": 1,
       "awayScore": 0,
       "status": "live",
+      "effectiveStatus": "live",
       "venue": "真机测试场馆 A"
     },
     {
@@ -49,6 +52,7 @@
       "homeScore": 2,
       "awayScore": 2,
       "status": "finished",
+      "effectiveStatus": "finished",
       "venue": "真机测试场馆 B"
     },
     {
@@ -61,6 +65,7 @@
       "homeScore": null,
       "awayScore": null,
       "status": "postponed",
+      "effectiveStatus": "postponed",
       "venue": null
     },
     {
@@ -73,6 +78,7 @@
       "homeScore": null,
       "awayScore": null,
       "status": "cancelled",
+      "effectiveStatus": "cancelled",
       "venue": null
     },
     {
@@ -85,6 +91,7 @@
       "homeScore": null,
       "awayScore": null,
       "status": "live",
+      "effectiveStatus": "live",
       "venue": "真机测试场馆 C"
     }
   ]

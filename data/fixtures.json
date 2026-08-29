@@ -7,6 +7,7 @@
     "season": 2026
   },
   "updatedAt": "2026-08-22T11:48:00+08:00",
+  "effectiveStatusAt": "2026-08-29T13:33:14.115Z",
   "source": {
     "name": "江苏省城市足球联赛组委会",
     "type": "official-announcement",
@@ -28,6 +29,7 @@
       "homeScore": null,
       "awayScore": null,
       "status": "scheduled",
+      "effectiveStatus": "live",
       "venue": null
     },
     {
@@ -40,6 +42,7 @@
       "homeScore": null,
       "awayScore": null,
       "status": "scheduled",
+      "effectiveStatus": "live",
       "venue": null
     },
     {
@@ -52,6 +55,7 @@
       "homeScore": null,
       "awayScore": null,
       "status": "scheduled",
+      "effectiveStatus": "live",
       "venue": null
     }
   ]

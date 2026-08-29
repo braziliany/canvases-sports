@@ -1,10 +1,6 @@
-export const FIXTURE_STATUSES = Object.freeze([
-  "scheduled",
-  "live",
-  "finished",
-  "postponed",
-  "cancelled"
-]);
+import { deriveEffectiveStatus, FIXTURE_STATUSES } from "./fixture-state.js";
+
+export { FIXTURE_STATUSES };
 
 const REQUIRED_FIXTURE_FIELDS = [
   "id",
@@ -16,6 +12,7 @@ const REQUIRED_FIXTURE_FIELDS = [
   "homeScore",
   "awayScore",
   "status",
+  "effectiveStatus",
   "venue"
 ];
 
@@ -69,6 +66,9 @@ export function validateFixtures(data) {
   if (typeof data.updatedAt !== "string" || Number.isNaN(Date.parse(data.updatedAt))) {
     issues.push("updatedAt must be ISO-8601");
   }
+  const effectiveStatusAtIsValid = typeof data.effectiveStatusAt === "string" &&
+    !Number.isNaN(Date.parse(data.effectiveStatusAt));
+  if (!effectiveStatusAtIsValid) issues.push("effectiveStatusAt must be ISO-8601");
   if (!Array.isArray(data.fixtures)) issues.push("fixtures must be an array");
 
   const ids = new Set();
@@ -99,6 +99,15 @@ export function validateFixtures(data) {
     }
     if (fixture.homeTeam === fixture.awayTeam) issues.push(`${path} must use different teams`);
     if (!FIXTURE_STATUSES.includes(fixture.status)) issues.push(`${path}.status is invalid`);
+    if (!FIXTURE_STATUSES.includes(fixture.effectiveStatus)) {
+      issues.push(`${path}.effectiveStatus is invalid`);
+    } else if (effectiveStatusAtIsValid && isValidDate(fixture.date) && isValidTime(fixture.time) &&
+      FIXTURE_STATUSES.includes(fixture.status)) {
+      const expectedStatus = deriveEffectiveStatus(fixture, { now: data.effectiveStatusAt });
+      if (fixture.effectiveStatus !== expectedStatus) {
+        issues.push(`${path}.effectiveStatus must equal ${expectedStatus} at effectiveStatusAt`);
+      }
+    }
     if (fixture.venue !== null && typeof fixture.venue !== "string") {
       issues.push(`${path}.venue must be a string or null`);
     }

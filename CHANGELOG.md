@@ -11,12 +11,17 @@
 - Synthetic six-case device status matrix fixture
 - On-device status mapping, score rendering, and missing-score verification
 - ADR-007 for decoupled status/score rendering and Less is More
+- Effective match status normalizer and deterministic kickoff regression tests
+- `effectiveStatus` / `effectiveStatusAt` in the fixtures contract
+- ADR-008 documenting explicit-state precedence and the Shortcut renderer boundary
 
 ### Changed
 
 - `npm run validate` now checks standings and fixtures contracts
 - `npm run validate` also checks the synthetic device fixture
 - v0.2 is marked complete after the device status matrix passed
+- Production fixtures expose `live` as the effective status for the three
+  2026-08-29 19:40 matches at the 20:53 regression instant
 
 ## [0.1.0] - 2026-08-24
 

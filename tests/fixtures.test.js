@@ -22,16 +22,27 @@ test("fixtures.json passes the fixtures schema", () => {
 test("device fixture covers the device status and score matrix", () => {
   const fixtures = validateFixtures(deviceFixtureData).fixtures;
   assert.deepEqual(
-    fixtures.map(({ status, homeScore, awayScore }) => [status, homeScore, awayScore]),
+    fixtures.map(({ status, effectiveStatus, homeScore, awayScore }) => [
+      status,
+      effectiveStatus,
+      homeScore,
+      awayScore
+    ]),
     [
-      ["scheduled", null, null],
-      ["live", 1, 0],
-      ["finished", 2, 2],
-      ["postponed", null, null],
-      ["cancelled", null, null],
-      ["live", null, null]
+      ["scheduled", "scheduled", null, null],
+      ["live", "live", 1, 0],
+      ["finished", "finished", 2, 2],
+      ["postponed", "postponed", null, null],
+      ["cancelled", "cancelled", null, null],
+      ["live", "live", null, null]
     ]
   );
+});
+
+test("rejects an effective status inconsistent with its derivation time", () => {
+  const invalid = structuredClone(fixtureData);
+  invalid.fixtures[0].effectiveStatus = "scheduled";
+  assert.throws(() => validateFixtures(invalid), FixturesValidationError);
 });
 
 test("rejects duplicate fixture ids", () => {
@@ -64,10 +75,12 @@ test("scheduled scores must be null and finished scores must exist", () => {
 
   const finishedWithoutScore = structuredClone(fixtureData);
   finishedWithoutScore.fixtures[0].status = "finished";
+  finishedWithoutScore.fixtures[0].effectiveStatus = "finished";
   assert.throws(() => validateFixtures(finishedWithoutScore), FixturesValidationError);
 
   const finished = structuredClone(fixtureData);
   finished.fixtures[0].status = "finished";
+  finished.fixtures[0].effectiveStatus = "finished";
   finished.fixtures[0].homeScore = 2;
   finished.fixtures[0].awayScore = 1;
   assert.doesNotThrow(() => validateFixtures(finished));

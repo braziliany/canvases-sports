@@ -24,6 +24,7 @@ completes the reusable dynamic-fixtures data layer and device status matrix.
 - A Shortcuts-driven Canvases implementation specification
 - Responsive dark web reference UI
 - A validated `data/fixtures.json` contract and Jiangsu fixture status mapping
+- A deterministic effective-status normalizer for kickoff transitions
 - A synthetic device fixture for status and score rendering verification
 
 ## Data source
@@ -52,7 +53,7 @@ data/standings.json
 
 Official fixture announcements
         ↓ human-reviewed transcription
-Fixtures Schema + Validation
+Fixtures Schema + Validation + Effective Status Normalizer
         ↓
 data/fixtures.json
         └─→ iOS Shortcut → match-row Template → Widget
@@ -68,6 +69,7 @@ Requires Node.js 20 or newer.
 ```bash
 npm test
 npm run validate
+npm run fixtures:normalize
 npm run dev
 ```
 
@@ -115,6 +117,8 @@ of the Canvases architecture.
 `data/standings.json` and `data/fixtures.json` are stable client contracts.
 `data/fixtures-device-test.json` is synthetic device-test data and is never the
 production Shortcut default.
+Fixtures retain source `status`; the Shortcut displays normalized
+`effectiveStatus`. Time may derive `scheduled → live`, never `live → finished`.
 Fixtures are transcribed only from reviewed sources; unknown venues remain
 `null`. Run `npm run validate` and `npm test` after every data change.
 
