@@ -17,6 +17,10 @@
 - Deterministic match-result settlement and standings build command
 - Official tie-break handling with explicit failure for missing fair-play/draw data
 - ADR-009 documenting fixtures as the result source of truth
+- ResultCandidate schema and isolated candidate data file
+- Explicit `results:confirm` human-review command
+- Conflict-safe, idempotent, rollback-backed result settlement
+- ADR-010 documenting ingestion and human confirmation boundaries
 
 ### Changed
 
@@ -26,6 +30,7 @@
 - Production fixtures expose `live` as the effective status for the three
   2026-08-29 19:40 matches at the 20:53 regression instant
 - Standings validation now compares the published table with calculator output
+- Project validation now includes the ResultCandidate contract
 
 ## [0.1.0] - 2026-08-24
 

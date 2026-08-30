@@ -26,6 +26,7 @@ completes the reusable dynamic-fixtures data layer and device status matrix.
 - A validated `data/fixtures.json` contract and Jiangsu fixture status mapping
 - A deterministic effective-status normalizer for kickoff transitions
 - A deterministic finished-result-to-standings calculator
+- A reviewed ResultCandidate → authoritative fixture settlement workflow
 - A synthetic device fixture for status and score rendering verification
 
 ## Data source
@@ -59,6 +60,12 @@ Fixtures Schema + Validation + Effective Status Normalizer
 data/fixtures.json
         ├─→ iOS Shortcut → match-row Template → Widget
         └─→ Standings Calculator → data/standings.json → standings Shortcut
+
+Reviewed result observation
+        ↓ ResultCandidate (not authoritative)
+Human `CONFIRM`
+        ↓ validated, tested, rollback-safe settlement
+data/fixtures.json + data/standings.json
 ```
 
 The adapter boundary is intentionally reusable; another league can later emit
@@ -73,6 +80,7 @@ npm test
 npm run validate
 npm run fixtures:normalize
 npm run standings:build
+npm run results:confirm -- <candidateId>
 npm run dev
 ```
 
@@ -125,6 +133,11 @@ Fixtures retain source `status`; the Shortcut displays normalized
 Only fixtures with source `status: finished` and two real scores enter standings
 settlement. The current builder uses the official 2026-08-15 standings snapshot
 as a temporary historical baseline until full-season fixtures are backfilled.
+`data/result-candidates.json` isolates observed scores from authoritative facts.
+A candidate never changes standings until a maintainer reviews its source and
+explicitly confirms it with `npm run results:confirm -- <candidateId>`. The
+command validates and tests the complete settlement before committing all data
+files together, with rollback on write failure.
 Fixtures are transcribed only from reviewed sources; unknown venues remain
 `null`. Run `npm run validate` and `npm test` after every data change.
 
