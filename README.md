@@ -27,6 +27,7 @@ completes the reusable dynamic-fixtures data layer and device status matrix.
 - A deterministic effective-status normalizer for kickoff transitions
 - A deterministic finished-result-to-standings calculator
 - A reviewed ResultCandidate → authoritative fixture settlement workflow
+- A safe interactive ResultCandidate entry command
 - A synthetic device fixture for status and score rendering verification
 
 ## Data source
@@ -62,7 +63,8 @@ data/fixtures.json
         └─→ Standings Calculator → data/standings.json → standings Shortcut
 
 Reviewed result observation
-        ↓ ResultCandidate (not authoritative)
+        ↓ `results:add`
+ResultCandidate (not authoritative)
 Human `CONFIRM`
         ↓ validated, tested, rollback-safe settlement
 data/fixtures.json + data/standings.json
@@ -80,6 +82,7 @@ npm test
 npm run validate
 npm run fixtures:normalize
 npm run standings:build
+npm run results:add
 npm run results:confirm -- <candidateId>
 npm run dev
 ```
@@ -134,6 +137,8 @@ Only fixtures with source `status: finished` and two real scores enter standings
 settlement. The current builder uses the official 2026-08-15 standings snapshot
 as a temporary historical baseline until full-season fixtures are backfilled.
 `data/result-candidates.json` isolates observed scores from authoritative facts.
+A maintainer can add an observation with `npm run results:add`; this command
+only writes a validated candidate and never changes fixtures or standings.
 A candidate never changes standings until a maintainer reviews its source and
 explicitly confirms it with `npm run results:confirm -- <candidateId>`. The
 command validates and tests the complete settlement before committing all data

@@ -21,6 +21,9 @@
 - Explicit `results:confirm` human-review command
 - Conflict-safe, idempotent, rollback-backed result settlement
 - ADR-010 documenting ingestion and human confirmation boundaries
+- Interactive `results:add` command for safe ResultCandidate entry
+- Unique candidate IDs and explicit multi-source candidate handling
+- Transaction-backed candidate-only writes and entry validation tests
 
 ### Changed
 

@@ -10,6 +10,7 @@
 - [v0.2 Dynamic Fixtures 真机验证归档](v0.2-dynamic-fixtures.md)
 - [v0.2 Match Result Settlement](v0.2-match-result-settlement.md)
 - [v0.2 Phase 3 Match Result Ingestion](v0.2-match-result-ingestion.md)
+- [v0.2 Phase 4 ResultCandidate Entry](v0.2-result-candidate-entry.md)
 - [开发日志](开发日志.md)
 - [决策记录](决策记录.md)
 - [Roadmap](Roadmap.md)
