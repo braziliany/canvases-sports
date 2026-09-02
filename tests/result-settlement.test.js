@@ -23,10 +23,19 @@ const source = JSON.parse(await readFile(
   "utf8"
 ));
 const baseline = adaptJiangsuSnapshot(source);
-const formalFixtures = JSON.parse(await readFile(
+const publishedFixtures = JSON.parse(await readFile(
   new URL("../data/fixtures.json", import.meta.url),
   "utf8"
 ));
+const formalFixtures = structuredClone(publishedFixtures);
+for (const fixture of formalFixtures.fixtures) {
+  Object.assign(fixture, {
+    status: "scheduled",
+    effectiveStatus: "live",
+    homeScore: null,
+    awayScore: null
+  });
+}
 
 const CONFIRMED_AT = "2026-08-29T22:05:00+08:00";
 
@@ -265,6 +274,25 @@ test("verification failure prevents the commit callback from running", async () 
   }), /simulated validation failure/);
   assert.equal(committed, false);
   assert.equal(formalFixtures.fixtures[0].status, "scheduled");
+});
+
+test("default transaction replaces every existing file", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "canvases-result-transaction-success-"));
+  const fixturesPath = join(directory, "fixtures.json");
+  const standingsPath = join(directory, "standings.json");
+  await writeFile(fixturesPath, '{"state":"fixtures-before"}\n', "utf8");
+  await writeFile(standingsPath, '{"state":"standings-before"}\n', "utf8");
+
+  try {
+    await commitJsonFilesAtomically([
+      { path: fixturesPath, data: { state: "fixtures-after" } },
+      { path: standingsPath, data: { state: "standings-after" } }
+    ]);
+    assert.deepEqual(JSON.parse(await readFile(fixturesPath, "utf8")), { state: "fixtures-after" });
+    assert.deepEqual(JSON.parse(await readFile(standingsPath, "utf8")), { state: "standings-after" });
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
 });
 
 test("multi-file write failure rolls every formal file back", async () => {

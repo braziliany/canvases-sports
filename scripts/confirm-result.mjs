@@ -1,5 +1,5 @@
 import { spawn } from "node:child_process";
-import { readFile } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { createInterface } from "node:readline/promises";
 import { fileURLToPath } from "node:url";
@@ -25,17 +25,27 @@ async function readJson(path) {
 }
 
 async function runTests() {
-  await new Promise((resolvePromise, reject) => {
-    const child = spawn(process.execPath, ["--test"], {
-      cwd: projectRoot,
-      stdio: "inherit"
+  const testDirectory = resolve(projectRoot, "tests");
+  const testFiles = (await readdir(testDirectory))
+    .filter((name) => name.endsWith(".test.js"))
+    .sort();
+  if (testFiles.length === 0) throw new Error("No test files found");
+
+  for (const testFile of testFiles) {
+    await new Promise((resolvePromise, reject) => {
+      const child = spawn(process.execPath, [resolve(testDirectory, testFile)], {
+        cwd: projectRoot,
+        stdio: "inherit"
+      });
+      child.once("error", reject);
+      child.once("exit", (code, signal) => {
+        if (code === 0) resolvePromise();
+        else reject(new Error(
+          `${testFile} failed${signal ? ` with signal ${signal}` : ` with exit code ${code}`}`
+        ));
+      });
     });
-    child.once("error", reject);
-    child.once("exit", (code, signal) => {
-      if (code === 0) resolvePromise();
-      else reject(new Error(`Tests failed${signal ? ` with signal ${signal}` : ` with exit code ${code}`}`));
-    });
-  });
+  }
 }
 
 function printUsage(candidates) {

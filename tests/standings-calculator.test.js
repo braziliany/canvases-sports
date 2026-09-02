@@ -13,10 +13,19 @@ const source = JSON.parse(await readFile(
   "utf8"
 ));
 const baseline = adaptJiangsuSnapshot(source);
-const formalFixtures = JSON.parse(await readFile(
+const publishedFixtures = JSON.parse(await readFile(
   new URL("../data/fixtures.json", import.meta.url),
   "utf8"
 ));
+const formalFixtures = structuredClone(publishedFixtures);
+for (const fixture of formalFixtures.fixtures) {
+  Object.assign(fixture, {
+    status: "scheduled",
+    effectiveStatus: "live",
+    homeScore: null,
+    awayScore: null
+  });
+}
 
 function result(overrides = {}) {
   return {

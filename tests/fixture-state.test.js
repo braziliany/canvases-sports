@@ -1,6 +1,5 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
 import {
   deriveEffectiveStatus,
   deriveScoreState,
@@ -61,10 +60,14 @@ test("live with a missing score has no score", () => {
 });
 
 test("2026-08-29 20:53 regression marks all three published fixtures live", async () => {
-  const published = JSON.parse(
-    await readFile(new URL("../data/fixtures.json", import.meta.url), "utf8")
-  );
-  const normalized = normalizeFixtureStatuses(published, {
+  const regressionFixtures = {
+    fixtures: [
+      { ...kickoffFixture, homeTeam: "常州", awayTeam: "无锡" },
+      { ...kickoffFixture, homeTeam: "淮安", awayTeam: "连云港" },
+      { ...kickoffFixture, homeTeam: "扬州", awayTeam: "宿迁" }
+    ]
+  };
+  const normalized = normalizeFixtureStatuses(regressionFixtures, {
     now: "2026-08-29T20:53:00+08:00"
   });
 

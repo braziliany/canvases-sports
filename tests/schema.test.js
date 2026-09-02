@@ -5,7 +5,7 @@ import { validateStandings, ValidationError } from "../src/core/schema.js";
 
 const fixture = JSON.parse(await readFile(new URL("../data/standings.json", import.meta.url), "utf8"));
 
-test("validates the fixed 13-team snapshot", () => {
+test("validates the published 13-team standings", () => {
   assert.equal(validateStandings(fixture).standings.length, 13);
 });
 
@@ -17,6 +17,7 @@ test("rejects inconsistent match totals", () => {
 
 test("rejects fabricated trend without previous rank", () => {
   const invalid = structuredClone(fixture);
+  invalid.standings[0].previousRank = null;
   invalid.standings[0].trend = 2;
   assert.throws(() => validateStandings(invalid), ValidationError);
 });

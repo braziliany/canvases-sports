@@ -19,7 +19,11 @@ async function removeIfPresent(path) {
   }
 }
 
-export async function commitJsonFilesAtomically(entries, { replaceFile = copyFile } = {}) {
+async function replaceWithCopy(sourcePath, targetPath) {
+  await copyFile(sourcePath, targetPath);
+}
+
+export async function commitJsonFilesAtomically(entries, { replaceFile = replaceWithCopy } = {}) {
   if (!Array.isArray(entries) || entries.length === 0) {
     throw new TypeError("entries must contain at least one file");
   }

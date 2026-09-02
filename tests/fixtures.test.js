@@ -8,15 +8,22 @@ import {
 } from "../src/core/fixtures-schema.js";
 import { mapJiangsuFixtureStatus } from "../src/leagues/jiangsu/fixture-status.js";
 
-const fixtureData = JSON.parse(
+const publishedFixtureData = JSON.parse(
   await readFile(new URL("../data/fixtures.json", import.meta.url), "utf8")
 );
+const fixtureData = structuredClone(publishedFixtureData);
+Object.assign(fixtureData.fixtures[0], {
+  status: "scheduled",
+  effectiveStatus: "live",
+  homeScore: null,
+  awayScore: null
+});
 const deviceFixtureData = JSON.parse(
   await readFile(new URL("../data/fixtures-device-test.json", import.meta.url), "utf8")
 );
 
 test("fixtures.json passes the fixtures schema", () => {
-  assert.equal(validateFixtures(fixtureData).fixtures.length, 3);
+  assert.equal(validateFixtures(publishedFixtureData).fixtures.length, 3);
 });
 
 test("device fixture covers the device status and score matrix", () => {

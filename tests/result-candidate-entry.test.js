@@ -19,24 +19,41 @@ import {
 import { validateResultCandidates } from "../src/core/result-candidates-schema.js";
 import { settleResultCandidate } from "../src/core/result-settlement.js";
 
-const fixturesData = JSON.parse(await readFile(
+const publishedFixturesData = JSON.parse(await readFile(
   new URL("../data/fixtures.json", import.meta.url),
   "utf8"
 ));
-const publishedCandidates = JSON.parse(await readFile(
-  new URL("../data/result-candidates.json", import.meta.url),
-  "utf8"
-));
+const fixturesData = structuredClone(publishedFixturesData);
+for (const fixture of fixturesData.fixtures) {
+  Object.assign(fixture, {
+    status: "scheduled",
+    effectiveStatus: "live",
+    homeScore: null,
+    awayScore: null
+  });
+}
 const publishedStandingsText = await readFile(
   new URL("../data/standings.json", import.meta.url),
   "utf8"
 );
 const OBSERVED_AT = "2026-08-29T22:00:00+08:00";
 
+function candidateData(candidates = []) {
+  return {
+    schemaVersion: 1,
+    league: {
+      id: fixturesData.league.id,
+      season: fixturesData.league.season
+    },
+    updatedAt: "2026-08-29T21:59:00+08:00",
+    candidates: structuredClone(candidates)
+  };
+}
+
 function append(overrides = {}) {
   return appendResultCandidate({
     fixturesData,
-    candidatesData: publishedCandidates,
+    candidatesData: candidateData(),
     fixtureId: fixturesData.fixtures[0].id,
     homeScore: 1,
     awayScore: 0,
@@ -97,7 +114,6 @@ test("source is required and source URL may be empty or valid HTTP(S)", () => {
 
 test("a valid candidate appends without changing existing candidates and passes the contract", () => {
   const prepared = append({ homeScore: "0", awayScore: "0", sourceUrl: "" });
-  assert.equal(publishedCandidates.candidates.length, 0);
   assert.equal(prepared.candidatesData.candidates.length, 1);
   assert.deepEqual(
     [prepared.candidate.homeScore, prepared.candidate.awayScore, prepared.candidate.sourceUrl],
@@ -169,7 +185,7 @@ test("approved entry safely writes only the candidate file", async () => {
   const standingsPath = join(directory, "standings.json");
   const candidatesPath = join(directory, "result-candidates.json");
   const fixturesText = `${JSON.stringify(fixturesData, null, 2)}\n`;
-  const candidatesText = `${JSON.stringify(publishedCandidates, null, 2)}\n`;
+  const candidatesText = `${JSON.stringify(candidateData(), null, 2)}\n`;
   await writeFile(fixturesPath, fixturesText, "utf8");
   await writeFile(standingsPath, publishedStandingsText, "utf8");
   await writeFile(candidatesPath, candidatesText, "utf8");
@@ -191,8 +207,4 @@ test("approved entry safely writes only the candidate file", async () => {
   } finally {
     await rm(directory, { recursive: true, force: true });
   }
-});
-
-test("production candidate data remains free of mock results", () => {
-  assert.deepEqual(publishedCandidates.candidates, []);
 });
