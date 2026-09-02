@@ -30,12 +30,15 @@
 - ✅ 2026-08-29 三场 mock candidate 结构回归
 - ✅ `results:add` 人工 Candidate 录入入口
 - ✅ Candidate 唯一 ID、多来源共存和安全单文件写入
+- ✅ Candidate Test Isolation 集成修复：合法非空候选不再阻断确认前测试门禁
+- ✅ 受控赛果快照 Adapter、Observation、严格 fixture 匹配与 `results:discover`
+- ✅ 重复发现抑制、多来源/冲突 Candidate 共存与人工 `ADD` 闸门
 - ⏳ 完整历史 fixtures、公平竞赛积分与抽签顺序
-- ⏳ 可靠赛果 Adapter、自动候选采集与发布编排
+- ⏳ 在线来源获取、调度与发布编排
 
 继续复用 `Repeat Each → Create View → Chained Update → Repeat Results → Grid.Children`，不设计第二套动态列表机制。
 
-状态：**Canvases Sports v0.2 Phase 4 implementation complete; awaiting human review**。
+状态：**Canvases Sports v0.2 Phase 5 implementation complete; awaiting review**。
 
 ## v0.3 — 赛事入口页
 

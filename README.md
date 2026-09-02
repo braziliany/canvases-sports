@@ -28,6 +28,8 @@ completes the reusable dynamic-fixtures data layer and device status matrix.
 - A deterministic finished-result-to-standings calculator
 - A reviewed ResultCandidate → authoritative fixture settlement workflow
 - A safe interactive ResultCandidate entry command
+- Candidate tests isolated from the current contents of the production candidate file
+- A controlled snapshot-based result adapter and candidate discovery preview
 - A synthetic device fixture for status and score rendering verification
 
 ## Data source
@@ -68,6 +70,12 @@ ResultCandidate (not authoritative)
 Human `CONFIRM`
         ↓ validated, tested, rollback-safe settlement
 data/fixtures.json + data/standings.json
+
+Controlled public result report
+        ↓ snapshot → adapter → observation → exact fixture match
+ResultCandidate preview
+        ↓ exact `ADD`
+data/result-candidates.json (still requires human `CONFIRM`)
 ```
 
 The adapter boundary is intentionally reusable; another league can later emit
@@ -83,6 +91,7 @@ npm run validate
 npm run fixtures:normalize
 npm run standings:build
 npm run results:add
+npm run results:discover -- --dry-run
 npm run results:confirm -- <candidateId>
 npm run dev
 ```
@@ -137,8 +146,18 @@ Only fixtures with source `status: finished` and two real scores enter standings
 settlement. The current builder uses the official 2026-08-15 standings snapshot
 as a temporary historical baseline until full-season fixtures are backfilled.
 `data/result-candidates.json` isolates observed scores from authoritative facts.
+It may legitimately contain pending or confirmed candidates. Tests validate the
+candidate contract, fixture links, audit state, and explicit pollution markers;
+they do not assume that the production candidate collection is empty.
 A maintainer can add an observation with `npm run results:add`; this command
 only writes a validated candidate and never changes fixtures or standings.
+`npm run results:discover -- --dry-run` parses the controlled week-19 source
+snapshot, matches fixtures by league/season/round/date/teams, and previews
+ResultCandidates. The non-dry-run command still requires exact `ADD` and writes
+only the candidate file. Adapter output never bypasses human review.
+CLI regression tests use `--isolated-data-dir <absolute-path>`. The directory
+must already exist and cannot be the repository's official `data/` directory;
+missing or invalid isolation fails before any data file is read or written.
 A candidate never changes standings until a maintainer reviews its source and
 explicitly confirms it with `npm run results:confirm -- <candidateId>`. The
 command validates and tests the complete settlement before committing all data

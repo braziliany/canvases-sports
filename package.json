@@ -8,6 +8,7 @@
     "dev": "node scripts/dev-server.mjs",
     "fixtures:normalize": "node scripts/normalize-fixtures.mjs",
     "results:add": "node scripts/add-result-candidate.mjs",
+    "results:discover": "node scripts/discover-results.mjs",
     "results:confirm": "node scripts/confirm-result.mjs",
     "standings:build": "node scripts/build-standings.mjs",
     "test": "node --test",

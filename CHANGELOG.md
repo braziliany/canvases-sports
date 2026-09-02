@@ -24,9 +24,20 @@
 - Interactive `results:add` command for safe ResultCandidate entry
 - Unique candidate IDs and explicit multi-source candidate handling
 - Transaction-backed candidate-only writes and entry validation tests
+- Controlled week-19 result source snapshot and Yangtze Evening News adapter
+- ResultObservation contract and strict league/season/round/date/team fixture matcher
+- `results:discover` dry-run/`ADD` candidate discovery flow
+- Exact rediscovery suppression with multi-source and conflicting Candidate coexistence
+- Fail-closed `--isolated-data-dir` protection shared by result entry, discovery, and confirmation CLIs
 
 ### Changed
 
+- Candidate tests now use isolated data and accept legitimate non-empty production candidate states
+- Fixture and standings unit tests no longer assume the production files remain at their initial pre-settlement state
+- Production candidate integrity checks now validate contracts, fixture links, audit state, and explicit pollution markers instead of requiring zero candidates
+- Pre-commit confirmation tests run every test file serially to avoid nested Windows test-worker crashes
+- Default multi-file transactions no longer pass the entry index as a `copyFile` flag
+- CLI regression tests now create temporary data directories with Node and reject invalid isolation instead of relying on shell directory changes
 - `npm run validate` now checks standings and fixtures contracts
 - `npm run validate` also checks the synthetic device fixture
 - v0.2 is marked complete after the device status matrix passed

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "adapter": "yangtze-evening-news-final-report-v1",
+  "source": {
+    "name": "扬子晚报/紫牛新闻",
+    "type": "official-republish",
+    "url": "https://wap.yzwb.net/wap/news/5004565.html",
+    "retrievedAt": "2026-09-01T14:10:18.334Z"
+  },
+  "context": {
+    "leagueId": "jiangsu-city-football-league",
+    "season": 2026,
+    "round": 19,
+    "date": "2026-08-29"
+  },
+  "title": "“苏超”第19周比赛最终战报",
+  "rawText": "淮安队2:0连云港队\n常州队1:5无锡队\n扬州队0:1宿迁队"
+}

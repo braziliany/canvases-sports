@@ -3,6 +3,7 @@ import { readdir, readFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { createInterface } from "node:readline/promises";
 import { fileURLToPath } from "node:url";
+import { resolveCliDataDirectory } from "../src/core/cli-data-directory.js";
 import { commitJsonFilesAtomically } from "../src/core/json-file-transaction.js";
 import { validateFixtures } from "../src/core/fixtures-schema.js";
 import { validateResultCandidates } from "../src/core/result-candidates-schema.js";
@@ -13,12 +14,7 @@ import {
 import { formatResultCandidateReview } from "../src/core/result-settlement.js";
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const paths = {
-  source: resolve(projectRoot, "data/sources/jiangsu-2026-08-15.json"),
-  fixtures: resolve(projectRoot, "data/fixtures.json"),
-  standings: resolve(projectRoot, "data/standings.json"),
-  candidates: resolve(projectRoot, "data/result-candidates.json")
-};
+const officialDataDirectory = resolve(projectRoot, "data");
 
 async function readJson(path) {
   return JSON.parse(await readFile(path, "utf8"));
@@ -61,6 +57,19 @@ function printUsage(candidates) {
 }
 
 async function main() {
+  const dataSelection = await resolveCliDataDirectory(
+    process.argv.slice(2),
+    officialDataDirectory
+  );
+  const paths = {
+    source: resolve(dataSelection.dataDirectory, "sources/jiangsu-2026-08-15.json"),
+    fixtures: resolve(dataSelection.dataDirectory, "fixtures.json"),
+    standings: resolve(dataSelection.dataDirectory, "standings.json"),
+    candidates: resolve(dataSelection.dataDirectory, "result-candidates.json")
+  };
+  if (dataSelection.isolated) {
+    console.log(`Isolation data directory: ${dataSelection.dataDirectory}`);
+  }
   const [source, fixturesData, candidatesData] = await Promise.all([
     readJson(paths.source),
     readJson(paths.fixtures),
@@ -69,7 +78,9 @@ async function main() {
   validateFixtures(fixturesData);
   validateResultCandidates(candidatesData);
 
-  const candidateId = process.argv.slice(2).find((argument) => !argument.startsWith("--"));
+  const candidateId = dataSelection.remainingArguments.find((argument) => !argument.startsWith("--"));
+  const unsupported = dataSelection.remainingArguments.filter((argument) => argument !== candidateId);
+  if (unsupported.length > 0) throw new Error(`Unsupported arguments: ${unsupported.join(", ")}`);
   if (!candidateId) {
     printUsage(candidatesData);
     process.exitCode = 1;

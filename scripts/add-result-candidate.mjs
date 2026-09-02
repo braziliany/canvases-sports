@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { createInterface } from "node:readline/promises";
 import { fileURLToPath } from "node:url";
+import { resolveCliDataDirectory } from "../src/core/cli-data-directory.js";
 import { commitJsonFilesAtomically } from "../src/core/json-file-transaction.js";
 import {
   appendResultCandidate,
@@ -18,10 +19,7 @@ import { validateFixtures } from "../src/core/fixtures-schema.js";
 import { validateResultCandidates } from "../src/core/result-candidates-schema.js";
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const paths = {
-  fixtures: resolve(projectRoot, "data/fixtures.json"),
-  candidates: resolve(projectRoot, "data/result-candidates.json")
-};
+const officialDataDirectory = resolve(projectRoot, "data");
 
 async function readJson(path) {
   return JSON.parse(await readFile(path, "utf8"));
@@ -52,6 +50,20 @@ function printExistingCandidates(candidates) {
 }
 
 async function main() {
+  const dataSelection = await resolveCliDataDirectory(
+    process.argv.slice(2),
+    officialDataDirectory
+  );
+  if (dataSelection.remainingArguments.length > 0) {
+    throw new Error(`Unsupported arguments: ${dataSelection.remainingArguments.join(", ")}`);
+  }
+  const paths = {
+    fixtures: resolve(dataSelection.dataDirectory, "fixtures.json"),
+    candidates: resolve(dataSelection.dataDirectory, "result-candidates.json")
+  };
+  if (dataSelection.isolated) {
+    console.log(`Isolation data directory: ${dataSelection.dataDirectory}`);
+  }
   const [fixturesData, candidatesData] = await Promise.all([
     readJson(paths.fixtures),
     readJson(paths.candidates)
