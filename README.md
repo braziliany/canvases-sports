@@ -143,8 +143,8 @@ production Shortcut default.
 Fixtures retain source `status`; the Shortcut displays normalized
 `effectiveStatus`. Time may derive `scheduled → live`, never `live → finished`.
 Only fixtures with source `status: finished` and two real scores enter standings
-settlement. The current builder uses the official 2026-08-15 standings snapshot
-as a temporary historical baseline until full-season fixtures are backfilled.
+settlement. The current builder uses a reviewed 2026-08-22 carry-forward baseline
+and an official 2026-08-29 ranking cross-check until full-season fixtures are backfilled.
 `data/result-candidates.json` isolates observed scores from authoritative facts.
 It may legitimately contain pending or confirmed candidates. Tests validate the
 candidate contract, fixture links, audit state, and explicit pollution markers;
@@ -175,3 +175,7 @@ sensitive information.
 
 See [docs/Roadmap.md](docs/Roadmap.md). v0.2 Dynamic Fixtures status and score
 rendering have been verified on-device.
+
+## Production result sync
+
+`npm run results:sync -- --dry-run` fetches two fixed trusted sources and previews reconciliation and settlement. `npm run results:sync` reuses ResultCandidate, settlement, transaction, and `buildJiangsuStandings` to publish only sufficiently corroborated facts. Conflicts and insufficient evidence remain in the human-review path. See [v0.2 production data sync](docs/v0.2-production-data-sync.md).

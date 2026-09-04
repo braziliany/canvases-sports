@@ -38,7 +38,9 @@
 
 继续复用 `Repeat Each → Create View → Chained Update → Repeat Results → Grid.Children`，不设计第二套动态列表机制。
 
-状态：**Canvases Sports v0.2 Phase 5 implementation complete; awaiting review**。
+状态：**Canvases Sports v0.2 production data pipeline complete; awaiting device acceptance**。
+
+生产收尾：✅ 两个固定可信在线来源；✅ 稳定 Snapshot；✅ 保守 reconciliation；✅ 自动结算与 standings 派生；✅ GitHub Actions 按变化发布。后续仍需扩展新比赛周来源配置与完整历史 fixtures。
 
 ## v0.3 — 赛事入口页
 
