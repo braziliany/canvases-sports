@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "leagueId": "jiangsu-city-football-league",
+  "season": 2026,
+  "asOfDate": "2026-08-29",
+  "requiredFixtureIds": [
+    "2026-regular-w19-changzhou-wuxi",
+    "2026-regular-w19-huaian-lianyungang",
+    "2026-regular-w19-yangzhou-suqian"
+  ],
+  "source": {
+    "name": "新华日报（华为资讯官方账号）",
+    "url": "https://feeds-drcn.cloud.huawei.com.cn/landingpage/latest?channel=HW_JINGXUAN_ZH&cpid=666&ctype=news&docid=1051754ID2BEE8J44UHZRN&dy_scenario=relate&emuiVer=27&pageType=26&r=CN&tn=9e440d31fbc2c0f47f7bd803df36c0eb7d63e2a759dc117f448b109d7e01f61e&to_app=hwbrowser",
+    "imageUrl": "https://contentcenter-drcn.dbankcdn.cn/img/pub_1/Browser_contentImg_1754_8/0b/v3/1051754ID2BEE8J44UHZRN/da570139a7684eda93230a7d21a49bf7_5_1/hd.webp",
+    "publishedAt": "2026-08-29T22:00:00+08:00",
+    "method": "human-reviewed-official-image-transcription"
+  },
+  "rows": [
+    { "rank": 1, "team": "无锡", "played": 10, "won": 6, "drawn": 3, "lost": 1, "goalsFor": 19, "goalsAgainst": 9, "points": 21 },
+    { "rank": 2, "team": "盐城", "played": 9, "won": 5, "drawn": 2, "lost": 2, "goalsFor": 9, "goalsAgainst": 6, "points": 17 },
+    { "rank": 3, "team": "宿迁", "played": 10, "won": 5, "drawn": 2, "lost": 3, "goalsFor": 15, "goalsAgainst": 11, "points": 17 },
+    { "rank": 4, "team": "苏州", "played": 10, "won": 4, "drawn": 4, "lost": 2, "goalsFor": 12, "goalsAgainst": 9, "points": 16 },
+    { "rank": 5, "team": "常州", "played": 10, "won": 5, "drawn": 1, "lost": 4, "goalsFor": 14, "goalsAgainst": 12, "points": 16 },
+    { "rank": 6, "team": "徐州", "played": 9, "won": 4, "drawn": 3, "lost": 2, "goalsFor": 11, "goalsAgainst": 5, "points": 15 },
+    { "rank": 7, "team": "南通", "played": 9, "won": 3, "drawn": 4, "lost": 2, "goalsFor": 7, "goalsAgainst": 8, "points": 13 },
+    { "rank": 8, "team": "南京", "played": 10, "won": 3, "drawn": 3, "lost": 4, "goalsFor": 6, "goalsAgainst": 7, "points": 12 },
+    { "rank": 9, "team": "泰州", "played": 9, "won": 3, "drawn": 3, "lost": 3, "goalsFor": 9, "goalsAgainst": 11, "points": 12 },
+    { "rank": 10, "team": "扬州", "played": 10, "won": 3, "drawn": 3, "lost": 4, "goalsFor": 6, "goalsAgainst": 8, "points": 12 },
+    { "rank": 11, "team": "淮安", "played": 10, "won": 3, "drawn": 2, "lost": 5, "goalsFor": 10, "goalsAgainst": 12, "points": 11 },
+    { "rank": 12, "team": "镇江", "played": 10, "won": 1, "drawn": 2, "lost": 7, "goalsFor": 6, "goalsAgainst": 17, "points": 5 },
+    { "rank": 13, "team": "连云港", "played": 10, "won": 0, "drawn": 4, "lost": 6, "goalsFor": 3, "goalsAgainst": 12, "points": 4 }
+  ]
+}

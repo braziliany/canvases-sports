@@ -62,18 +62,20 @@ async function main() {
     officialDataDirectory
   );
   const paths = {
-    source: resolve(dataSelection.dataDirectory, "sources/jiangsu-2026-08-15.json"),
+    source: resolve(dataSelection.dataDirectory, "sources/jiangsu-2026-08-22.json"),
     fixtures: resolve(dataSelection.dataDirectory, "fixtures.json"),
     standings: resolve(dataSelection.dataDirectory, "standings.json"),
     candidates: resolve(dataSelection.dataDirectory, "result-candidates.json")
+    ,rankingReference: resolve(dataSelection.dataDirectory, "sources/results/2026-08-29-w19-official-standings-reference.json")
   };
   if (dataSelection.isolated) {
     console.log(`Isolation data directory: ${dataSelection.dataDirectory}`);
   }
-  const [source, fixturesData, candidatesData] = await Promise.all([
+  const [source, fixturesData, candidatesData, rankingReference] = await Promise.all([
     readJson(paths.source),
     readJson(paths.fixtures),
-    readJson(paths.candidates)
+    readJson(paths.candidates),
+    readJson(paths.rankingReference)
   ]);
   validateFixtures(fixturesData);
   validateResultCandidates(candidatesData);
@@ -107,7 +109,8 @@ async function main() {
       fixturesData,
       candidatesData,
       candidateId,
-      confirmedAt
+      confirmedAt,
+      rankingReference
     }),
     verify: async () => {
       console.log("In-memory fixtures, candidates, and standings validation passed.");

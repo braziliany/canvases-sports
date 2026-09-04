@@ -108,7 +108,7 @@ function rankAffectedTieGroup(group, countedFixtures) {
   return sorted;
 }
 
-function rankRows(rows, countedFixtures, affectedTeamIds, baselineRanks) {
+function rankRows(rows, countedFixtures, affectedTeamIds, baselineRanks, referenceRanks) {
   const groups = new Map();
   for (const row of rows) {
     if (!groups.has(row.points)) groups.set(row.points, []);
@@ -119,11 +119,20 @@ function rankRows(rows, countedFixtures, affectedTeamIds, baselineRanks) {
   for (const points of [...groups.keys()].sort((left, right) => right - left)) {
     const group = groups.get(points);
     const groupWasAffected = group.some((row) => affectedTeamIds.has(row.team.id));
-    const sortedGroup = group.length === 1
-      ? group
-      : groupWasAffected
-        ? rankAffectedTieGroup(group, countedFixtures)
-        : [...group].sort((left, right) => baselineRanks.get(left.team.id) - baselineRanks.get(right.team.id));
+    let sortedGroup;
+    if (group.length === 1) sortedGroup = group;
+    else if (!groupWasAffected) {
+      sortedGroup = [...group].sort((left, right) => baselineRanks.get(left.team.id) - baselineRanks.get(right.team.id));
+    } else {
+      try {
+        sortedGroup = rankAffectedTieGroup(group, countedFixtures);
+      } catch (error) {
+        if (!(error instanceof InsufficientTieBreakerDataError) || !referenceRanks ||
+          group.some((row) => !referenceRanks.has(row.team.name))) throw error;
+        sortedGroup = [...group].sort((left, right) =>
+          referenceRanks.get(left.team.name) - referenceRanks.get(right.team.name));
+      }
+    }
     ranked.push(...sortedGroup);
   }
 
@@ -134,7 +143,8 @@ export function calculateStandings({
   baseline,
   fixtures,
   scoring = DEFAULT_SCORING,
-  updatedAt
+  updatedAt,
+  rankingReference = null
 }) {
   const countedFixtures = fixtures.filter(isCountedResult);
   if (countedFixtures.length === 0) return structuredClone(baseline);
@@ -157,7 +167,10 @@ export function calculateStandings({
     affectedTeamIds.add(away.team.id);
   }
 
-  const standings = rankRows(rows, countedFixtures, affectedTeamIds, baselineRanks)
+  const referenceRanks = rankingReference
+    ? new Map(rankingReference.rows.map((row) => [row.team, row.rank]))
+    : null;
+  const standings = rankRows(rows, countedFixtures, affectedTeamIds, baselineRanks, referenceRanks)
     .map((row) => {
       const previousRank = baselineRanks.get(row.team.id);
       return {
@@ -167,6 +180,19 @@ export function calculateStandings({
       };
     });
 
+  if (rankingReference) {
+    const referenceByTeam = new Map(rankingReference.rows.map((row) => [row.team, row]));
+    for (const row of standings) {
+      const expected = referenceByTeam.get(row.team.name);
+      if (!expected) throw new Error(`Ranking reference is missing ${row.team.name}`);
+      for (const field of ["rank", "played", "won", "drawn", "lost", "goalsFor", "goalsAgainst", "points"]) {
+        if (row[field] !== expected[field]) {
+          throw new Error(`Standings do not match official reference for ${row.team.name}.${field}`);
+        }
+      }
+    }
+  }
+
   return {
     ...structuredClone(baseline),
     updatedAt,
@@ -175,7 +201,8 @@ export function calculateStandings({
       type: "derived",
       method: "official-baseline-plus-finished-fixtures",
       baseline: baseline.source,
-      countedFixtureIds: countedFixtures.map((fixture) => fixture.id)
+      countedFixtureIds: countedFixtures.map((fixture) => fixture.id),
+      rankingReference: rankingReference?.source ?? null
     },
     standings
   };

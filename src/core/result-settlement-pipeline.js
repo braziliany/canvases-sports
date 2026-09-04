@@ -9,7 +9,8 @@ export function prepareResultSettlement({
   fixturesData,
   candidatesData,
   candidateId,
-  confirmedAt
+  confirmedAt,
+  rankingReference = null
 }) {
   const settlement = settleResultCandidate({
     fixturesData,
@@ -19,7 +20,8 @@ export function prepareResultSettlement({
   });
   const standingsData = buildJiangsuStandings({
     source,
-    fixturesData: settlement.fixturesData
+    fixturesData: settlement.fixturesData,
+    rankingReference
   });
 
   validateFixtures(settlement.fixturesData);

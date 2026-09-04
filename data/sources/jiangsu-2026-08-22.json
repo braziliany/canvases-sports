@@ -1,0 +1,175 @@
+{
+  "source": {
+    "name": "央视网第十八周战报 + 江苏省体育局 8 月 15 日基线",
+    "type": "reviewed-derived-baseline",
+    "url": "https://local.cctv.com/2026/08/22/ARTIse5xUuWH5DapzsYHgyKz260822.shtml",
+    "publishedAt": "2026-08-22T22:55:43+08:00",
+    "method": "reviewed-baseline-plus-three-reported-results",
+    "baselineUrl": "https://jsstyj.jiangsu.gov.cn/art/2026/8/15/art_93442_11816914.html",
+    "countedResults": [
+      "苏州 1:0 南京",
+      "镇江 1:1 徐州",
+      "泰州 1:1 淮安"
+    ],
+    "notes": "用于完整历史 fixtures 回填前的过渡基线；三场赛果由央视网赛后战报明确报道。"
+  },
+  "publishedAt": "2026-08-22T22:55:43+08:00",
+  "rows": [
+    {
+      "rank": 1,
+      "id": "wuxi",
+      "team": "无锡",
+      "played": 9,
+      "won": 5,
+      "drawn": 3,
+      "lost": 1,
+      "goalsFor": 14,
+      "goalsAgainst": 8,
+      "points": 18
+    },
+    {
+      "rank": 2,
+      "id": "yancheng",
+      "team": "盐城",
+      "played": 9,
+      "won": 5,
+      "drawn": 2,
+      "lost": 2,
+      "goalsFor": 9,
+      "goalsAgainst": 6,
+      "points": 17
+    },
+    {
+      "rank": 3,
+      "id": "changzhou",
+      "team": "常州",
+      "played": 9,
+      "won": 5,
+      "drawn": 1,
+      "lost": 3,
+      "goalsFor": 13,
+      "goalsAgainst": 7,
+      "points": 16
+    },
+    {
+      "rank": 4,
+      "id": "suzhou",
+      "team": "苏州",
+      "played": 10,
+      "won": 4,
+      "drawn": 4,
+      "lost": 2,
+      "goalsFor": 12,
+      "goalsAgainst": 9,
+      "points": 16
+    },
+    {
+      "rank": 5,
+      "id": "xuzhou",
+      "team": "徐州",
+      "played": 9,
+      "won": 4,
+      "drawn": 3,
+      "lost": 2,
+      "goalsFor": 11,
+      "goalsAgainst": 5,
+      "points": 15
+    },
+    {
+      "rank": 6,
+      "id": "suqian",
+      "team": "宿迁",
+      "played": 9,
+      "won": 4,
+      "drawn": 2,
+      "lost": 3,
+      "goalsFor": 14,
+      "goalsAgainst": 11,
+      "points": 14
+    },
+    {
+      "rank": 7,
+      "id": "nantong",
+      "team": "南通",
+      "played": 9,
+      "won": 3,
+      "drawn": 4,
+      "lost": 2,
+      "goalsFor": 7,
+      "goalsAgainst": 8,
+      "points": 13
+    },
+    {
+      "rank": 8,
+      "id": "yangzhou",
+      "team": "扬州",
+      "played": 9,
+      "won": 3,
+      "drawn": 3,
+      "lost": 3,
+      "goalsFor": 6,
+      "goalsAgainst": 7,
+      "points": 12
+    },
+    {
+      "rank": 9,
+      "id": "nanjing",
+      "team": "南京",
+      "played": 10,
+      "won": 3,
+      "drawn": 3,
+      "lost": 4,
+      "goalsFor": 6,
+      "goalsAgainst": 7,
+      "points": 12
+    },
+    {
+      "rank": 10,
+      "id": "taizhou",
+      "team": "泰州",
+      "played": 9,
+      "won": 3,
+      "drawn": 3,
+      "lost": 3,
+      "goalsFor": 9,
+      "goalsAgainst": 11,
+      "points": 12
+    },
+    {
+      "rank": 11,
+      "id": "huaian",
+      "team": "淮安",
+      "played": 9,
+      "won": 2,
+      "drawn": 2,
+      "lost": 5,
+      "goalsFor": 8,
+      "goalsAgainst": 12,
+      "points": 8
+    },
+    {
+      "rank": 12,
+      "id": "zhenjiang",
+      "team": "镇江",
+      "played": 10,
+      "won": 1,
+      "drawn": 2,
+      "lost": 7,
+      "goalsFor": 6,
+      "goalsAgainst": 17,
+      "points": 5
+    },
+    {
+      "rank": 13,
+      "id": "lianyungang",
+      "team": "连云港",
+      "played": 9,
+      "won": 0,
+      "drawn": 4,
+      "lost": 5,
+      "goalsFor": 3,
+      "goalsAgainst": 10,
+      "points": 4
+    }
+  ]
+}
