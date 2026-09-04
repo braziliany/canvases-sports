@@ -2,6 +2,9 @@ name: Result data sync
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - codex/effective-status
   schedule:
     - cron: "*/30 11-16 * * 6"
 
