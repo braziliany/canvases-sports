@@ -6,8 +6,8 @@
     "shortName": "苏超",
     "season": 2026
   },
-  "updatedAt": "2026-09-05T21:51:47.534Z",
-  "effectiveStatusAt": "2026-09-05T21:54:13.344Z",
+  "updatedAt": "2026-09-05T21:57:58.489Z",
+  "effectiveStatusAt": "2026-09-05T21:58:54.476Z",
   "source": {
     "name": "江苏省足球运动协会正式赛历",
     "type": "official-schedule",
@@ -15,7 +15,7 @@
     "publishedAt": "2026-02-11T11:49:00+08:00",
     "method": "human-reviewed-transcription",
     "scope": "2026常规赛第19至22周",
-    "notes": "日期、场序与对阵来自江苏省足球运动协会正式赛历；第20周由组委会购票公告复核，第20周19:40开球由交汇点当日预告复核。"
+    "notes": "日期、场序与对阵来自江苏省足球运动协会正式赛历；第20周由组委会购票公告复核，第20周19:40开球由交汇点当日预告复核；常规赛周六19:40开球规则由交汇点赛季报道复核。"
   },
   "scheduleSources": [
     {
@@ -48,6 +48,14 @@
       "type": "authoritative-media-preview",
       "url": "https://www.xhby.net/content/s6a9b714de4b027d1d0a3b6e1.html",
       "publishedAt": "2026-09-05T09:33:00+08:00",
+      "method": "human-reviewed-transcription"
+    },
+    {
+      "id": "xhby-2026-regular-kickoff-rule",
+      "name": "新华日报·交汇点新闻",
+      "type": "authoritative-media-season-report",
+      "url": "https://www.xhby.net/content/s69d9a4e6e4b09a6c3e09766e.html",
+      "publishedAt": "2026-04-11T19:35:00+08:00",
       "method": "human-reviewed-transcription"
     }
   ],
@@ -257,7 +265,9 @@
       "venue": null,
       "provenance": {
         "sourceId": "jsfa-2026-regular-calendar",
-        "corroboratedBy": []
+        "corroboratedBy": [
+          "xhby-2026-regular-kickoff-rule"
+        ]
       }
     },
     {
@@ -275,7 +285,9 @@
       "venue": null,
       "provenance": {
         "sourceId": "jsfa-2026-regular-calendar",
-        "corroboratedBy": []
+        "corroboratedBy": [
+          "xhby-2026-regular-kickoff-rule"
+        ]
       }
     },
     {
@@ -293,7 +305,9 @@
       "venue": null,
       "provenance": {
         "sourceId": "jsfa-2026-regular-calendar",
-        "corroboratedBy": []
+        "corroboratedBy": [
+          "xhby-2026-regular-kickoff-rule"
+        ]
       }
     },
     {
@@ -311,7 +325,9 @@
       "venue": null,
       "provenance": {
         "sourceId": "jsfa-2026-regular-calendar",
-        "corroboratedBy": []
+        "corroboratedBy": [
+          "xhby-2026-regular-kickoff-rule"
+        ]
       }
     },
     {
@@ -329,7 +345,9 @@
       "venue": null,
       "provenance": {
         "sourceId": "jsfa-2026-regular-calendar",
-        "corroboratedBy": []
+        "corroboratedBy": [
+          "xhby-2026-regular-kickoff-rule"
+        ]
       }
     },
     {
@@ -347,7 +365,9 @@
       "venue": null,
       "provenance": {
         "sourceId": "jsfa-2026-regular-calendar",
-        "corroboratedBy": []
+        "corroboratedBy": [
+          "xhby-2026-regular-kickoff-rule"
+        ]
       }
     },
     {
@@ -365,7 +385,9 @@
       "venue": null,
       "provenance": {
         "sourceId": "jsfa-2026-regular-calendar",
-        "corroboratedBy": []
+        "corroboratedBy": [
+          "xhby-2026-regular-kickoff-rule"
+        ]
       }
     },
     {
@@ -383,7 +405,9 @@
       "venue": null,
       "provenance": {
         "sourceId": "jsfa-2026-regular-calendar",
-        "corroboratedBy": []
+        "corroboratedBy": [
+          "xhby-2026-regular-kickoff-rule"
+        ]
       }
     },
     {
@@ -401,7 +425,9 @@
       "venue": null,
       "provenance": {
         "sourceId": "jsfa-2026-regular-calendar",
-        "corroboratedBy": []
+        "corroboratedBy": [
+          "xhby-2026-regular-kickoff-rule"
+        ]
       }
     },
     {
@@ -419,7 +445,9 @@
       "venue": null,
       "provenance": {
         "sourceId": "jsfa-2026-regular-calendar",
-        "corroboratedBy": []
+        "corroboratedBy": [
+          "xhby-2026-regular-kickoff-rule"
+        ]
       }
     },
     {
@@ -437,7 +465,9 @@
       "venue": null,
       "provenance": {
         "sourceId": "jsfa-2026-regular-calendar",
-        "corroboratedBy": []
+        "corroboratedBy": [
+          "xhby-2026-regular-kickoff-rule"
+        ]
       }
     },
     {
@@ -455,7 +485,9 @@
       "venue": null,
       "provenance": {
         "sourceId": "jsfa-2026-regular-calendar",
-        "corroboratedBy": []
+        "corroboratedBy": [
+          "xhby-2026-regular-kickoff-rule"
+        ]
       }
     }
   ]
