@@ -6,8 +6,8 @@
     "shortName": "苏超",
     "season": 2026
   },
-  "updatedAt": "2026-08-22T11:48:00+08:00",
-  "effectiveStatusAt": "2026-08-29T13:33:14.115Z",
+  "updatedAt": "2026-09-05T12:11:32.223Z",
+  "effectiveStatusAt": "2026-09-05T12:11:32.223Z",
   "source": {
     "name": "江苏省城市足球联赛组委会",
     "type": "official-announcement",
@@ -26,10 +26,10 @@
       "time": "19:40",
       "homeTeam": "常州",
       "awayTeam": "无锡",
-      "homeScore": null,
-      "awayScore": null,
-      "status": "scheduled",
-      "effectiveStatus": "live",
+      "homeScore": 1,
+      "awayScore": 5,
+      "status": "finished",
+      "effectiveStatus": "finished",
       "venue": null
     },
     {
@@ -39,10 +39,10 @@
       "time": "19:40",
       "homeTeam": "淮安",
       "awayTeam": "连云港",
-      "homeScore": null,
-      "awayScore": null,
-      "status": "scheduled",
-      "effectiveStatus": "live",
+      "homeScore": 2,
+      "awayScore": 0,
+      "status": "finished",
+      "effectiveStatus": "finished",
       "venue": null
     },
     {
@@ -52,10 +52,10 @@
       "time": "19:40",
       "homeTeam": "扬州",
       "awayTeam": "宿迁",
-      "homeScore": null,
-      "awayScore": null,
-      "status": "scheduled",
-      "effectiveStatus": "live",
+      "homeScore": 0,
+      "awayScore": 1,
+      "status": "finished",
+      "effectiveStatus": "finished",
       "venue": null
     }
   ]

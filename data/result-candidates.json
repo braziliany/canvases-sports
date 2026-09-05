@@ -4,6 +4,85 @@
     "id": "jiangsu-city-football-league",
     "season": 2026
   },
-  "updatedAt": "2026-08-30T00:00:00+08:00",
-  "candidates": []
+  "updatedAt": "2026-09-05T12:11:32.223Z",
+  "candidates": [
+    {
+      "id": "2026-regular-w19-huaian-lianyungang-result-20260905T121132223Z",
+      "fixtureId": "2026-regular-w19-huaian-lianyungang",
+      "homeTeam": "淮安",
+      "awayTeam": "连云港",
+      "homeScore": 2,
+      "awayScore": 0,
+      "source": "扬子晚报/紫牛新闻",
+      "sourceUrl": "https://wap.yzwb.net/wap/news/5004565.html",
+      "observedAt": "2026-09-05T12:11:32.223Z",
+      "reviewStatus": "confirmed",
+      "confirmedAt": "2026-09-05T12:11:32.223Z"
+    },
+    {
+      "id": "2026-regular-w19-changzhou-wuxi-result-20260905T121132223Z",
+      "fixtureId": "2026-regular-w19-changzhou-wuxi",
+      "homeTeam": "常州",
+      "awayTeam": "无锡",
+      "homeScore": 1,
+      "awayScore": 5,
+      "source": "扬子晚报/紫牛新闻",
+      "sourceUrl": "https://wap.yzwb.net/wap/news/5004565.html",
+      "observedAt": "2026-09-05T12:11:32.223Z",
+      "reviewStatus": "confirmed",
+      "confirmedAt": "2026-09-05T12:11:32.223Z"
+    },
+    {
+      "id": "2026-regular-w19-yangzhou-suqian-result-20260905T121132223Z",
+      "fixtureId": "2026-regular-w19-yangzhou-suqian",
+      "homeTeam": "扬州",
+      "awayTeam": "宿迁",
+      "homeScore": 0,
+      "awayScore": 1,
+      "source": "扬子晚报/紫牛新闻",
+      "sourceUrl": "https://wap.yzwb.net/wap/news/5004565.html",
+      "observedAt": "2026-09-05T12:11:32.223Z",
+      "reviewStatus": "confirmed",
+      "confirmedAt": "2026-09-05T12:11:32.223Z"
+    },
+    {
+      "id": "2026-regular-w19-changzhou-wuxi-result-20260905T121132223Z-2",
+      "fixtureId": "2026-regular-w19-changzhou-wuxi",
+      "homeTeam": "常州",
+      "awayTeam": "无锡",
+      "homeScore": 1,
+      "awayScore": 5,
+      "source": "常州市体育局",
+      "sourceUrl": "https://tyj.changzhou.gov.cn/html/tyj/2026/FMAJPNIE_0831/25514.html",
+      "observedAt": "2026-09-05T12:11:32.223Z",
+      "reviewStatus": "confirmed",
+      "confirmedAt": "2026-09-05T12:11:32.223Z"
+    },
+    {
+      "id": "2026-regular-w19-huaian-lianyungang-result-20260905T121132223Z-2",
+      "fixtureId": "2026-regular-w19-huaian-lianyungang",
+      "homeTeam": "淮安",
+      "awayTeam": "连云港",
+      "homeScore": 2,
+      "awayScore": 0,
+      "source": "淮安市公安局",
+      "sourceUrl": "https://gaj.huaian.gov.cn/col/9105_151615/art/o/17881920/1788231205335x0MzpBwp.html",
+      "observedAt": "2026-09-05T12:11:32.223Z",
+      "reviewStatus": "confirmed",
+      "confirmedAt": "2026-09-05T12:11:32.223Z"
+    },
+    {
+      "id": "2026-regular-w19-yangzhou-suqian-result-20260905T121132223Z-2",
+      "fixtureId": "2026-regular-w19-yangzhou-suqian",
+      "homeTeam": "扬州",
+      "awayTeam": "宿迁",
+      "homeScore": 0,
+      "awayScore": 1,
+      "source": "扬州发布",
+      "sourceUrl": "https://www.sina.cn/news/detail/5337366958184883.html",
+      "observedAt": "2026-09-05T12:11:32.223Z",
+      "reviewStatus": "confirmed",
+      "confirmedAt": "2026-09-05T12:11:32.223Z"
+    }
+  ]
 }

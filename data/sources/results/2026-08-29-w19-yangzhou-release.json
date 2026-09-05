@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "adapter": "yangzhou-release-final-result-v1",
+  "source": {
+    "name": "扬州发布",
+    "type": "official-republish",
+    "url": "https://www.sina.cn/news/detail/5337366958184883.html",
+    "retrievedAt": "2026-09-05T12:11:32.223Z"
+  },
+  "context": {
+    "leagueId": "jiangsu-city-football-league",
+    "season": 2026,
+    "round": 19,
+    "date": "2026-08-29"
+  },
+  "title": "苏超扬州队 vs 宿迁队终场发布",
+  "contentHash": "78a5d565cd4520c128442d98ccb72ed1ace140fec4bc5ca66102bb1c4d7b4156",
+  "rawText": "#苏超# 扬州队VS宿迁队整场比赛结束，最终宿迁队以一分优势小胜扬州队，比分定格在宿迁队1:0扬州队。 ​"
+}

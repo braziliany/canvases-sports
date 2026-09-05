@@ -5,7 +5,7 @@
     "name": "扬子晚报/紫牛新闻",
     "type": "official-republish",
     "url": "https://wap.yzwb.net/wap/news/5004565.html",
-    "retrievedAt": "2026-09-01T14:10:18.334Z"
+    "retrievedAt": "2026-09-05T12:11:32.223Z"
   },
   "context": {
     "leagueId": "jiangsu-city-football-league",
@@ -14,5 +14,6 @@
     "date": "2026-08-29"
   },
   "title": "“苏超”第19周比赛最终战报",
-  "rawText": "淮安队2:0连云港队\n常州队1:5无锡队\n扬州队0:1宿迁队"
+  "contentHash": "fed5f735d8c54ffd07c48f73da46bd3d01fdc294b90730487ccaf22474085d6f",
+  "rawText": "= 50000\"> {{numFilter(detailData.review_count)}} 次阅读\n{{item.tag}}\n8月29日，2026“苏超”第19周3场比赛同时开赛。 全场结束来看比分：\n淮安队2:0连云港队\n常州队1:5无锡队 （无锡队刘宇豪梅开二度，目前总计7球，暂列射手榜第一）\n扬州队0:1宿迁队\n再来看看今天到场的观赛人数：\n淮安队vs连云港队：31129人\n/strip/ignore-error/1|imageslim\"/>\n常州队vs无锡队：40613人\n/strip/ignore-error/1|imageslim\"/>\n扬州队vs宿迁队：28236人\n/strip/ignore-error/1|imageslim\"/>\n来源 | 扬子晚报/紫牛新闻记者 成沫 卢婧 朱鼎兆 马奔 张添翼 无锡发布 常州发布 江苏省城市足球联赛\n编辑 : 邱妙泉\n更多内容请打开紫牛新闻, 或 点击链接\n{{subjectData.subject_name}}\n{{sourceReset(item.source)}}"
 }
