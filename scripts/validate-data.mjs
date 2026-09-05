@@ -4,7 +4,6 @@ import { validateFixtures } from "../src/core/fixtures-schema.js";
 import { validateResultCandidates } from "../src/core/result-candidates-schema.js";
 import { buildJiangsuStandings } from "../src/leagues/jiangsu/standings-builder.js";
 import { parseYangtzeEveningNewsResults } from "../src/adapters/results/yangtze-evening-news.js";
-import { parseXinhuaDailyHuaweiResults } from "../src/adapters/results/xinhua-daily-huawei.js";
 import {
   parseChangzhouSportsBureauResult,
   parseHuaianPoliceResult,
@@ -31,7 +30,6 @@ const resultCandidates = JSON.parse(await readFile(new URL("../data/result-candi
 validateResultCandidates(resultCandidates);
 const resultAdapters = new Map([
   ["yangtze-evening-news-final-report-v1", parseYangtzeEveningNewsResults],
-  ["xinhua-daily-huawei-final-report-v1", parseXinhuaDailyHuaweiResults],
   ["changzhou-sports-bureau-final-result-v1", parseChangzhouSportsBureauResult],
   ["huaian-police-final-result-v1", parseHuaianPoliceResult],
   ["yangzhou-release-final-result-v1", parseYangzhouReleaseResult]

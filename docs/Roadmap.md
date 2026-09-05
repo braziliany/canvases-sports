@@ -40,7 +40,7 @@
 
 状态：**Canvases Sports v0.2 production data pipeline complete; awaiting device acceptance**。
 
-生产收尾：✅ 5 个受控来源 / 4 个独立 publisher identity；✅ 稳定 Snapshot；✅ 保守 reconciliation；✅ 自动结算与 standings 派生；✅ GitHub Actions 按变化发布。后续仍需扩展新比赛周来源配置与完整历史 fixtures。
+生产收尾：✅ 4 个受控来源 / 4 个独立 publisher identity；✅ 稳定 Snapshot；✅ 保守 reconciliation；✅ 自动结算与 standings 派生；✅ GitHub Actions 按变化发布。后续仍需扩展新比赛周来源配置与完整历史 fixtures。
 
 ## v0.3 — 赛事入口页
 

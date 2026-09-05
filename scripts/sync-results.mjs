@@ -2,7 +2,6 @@ import { readFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseYangtzeEveningNewsResults } from "../src/adapters/results/yangtze-evening-news.js";
-import { parseXinhuaDailyHuaweiResults } from "../src/adapters/results/xinhua-daily-huawei.js";
 import {
   parseChangzhouSportsBureauResult,
   parseHuaianPoliceResult,
@@ -18,10 +17,9 @@ const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const officialDataDirectory = resolve(projectRoot, "data");
 const adapters = new Map([
   ["yangtze-evening-news-final-report-v1", parseYangtzeEveningNewsResults],
-  ["xinhua-daily-huawei-final-report-v1", parseXinhuaDailyHuaweiResults]
-  ,["changzhou-sports-bureau-final-result-v1", parseChangzhouSportsBureauResult]
-  ,["huaian-police-final-result-v1", parseHuaianPoliceResult]
-  ,["yangzhou-release-final-result-v1", parseYangzhouReleaseResult]
+  ["changzhou-sports-bureau-final-result-v1", parseChangzhouSportsBureauResult],
+  ["huaian-police-final-result-v1", parseHuaianPoliceResult],
+  ["yangzhou-release-final-result-v1", parseYangzhouReleaseResult]
 ]);
 
 async function readJson(path) { return JSON.parse(await readFile(path, "utf8")); }
