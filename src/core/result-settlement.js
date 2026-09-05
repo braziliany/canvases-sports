@@ -1,5 +1,6 @@
 import { validateFixtures } from "./fixtures-schema.js";
 import { validateResultCandidates } from "./result-candidates-schema.js";
+import { normalizeFixtureStatuses } from "./fixture-state.js";
 
 export class ResultSettlementError extends Error {
   constructor(message) {
@@ -121,10 +122,13 @@ export function settleResultCandidate({
   updatedCandidate.confirmedAt = confirmationInstant;
   updatedCandidates.updatedAt = confirmationInstant;
 
-  validateFixtures(updatedFixtures);
+  const normalizedFixtures = normalizeFixtureStatuses(updatedFixtures, {
+    now: confirmationInstant
+  });
+  validateFixtures(normalizedFixtures);
   validateResultCandidates(updatedCandidates);
   return {
-    fixturesData: updatedFixtures,
+    fixturesData: normalizedFixtures,
     candidatesData: updatedCandidates,
     outcome: {
       fixtureId: fixture.id,

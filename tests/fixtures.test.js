@@ -23,7 +23,31 @@ const deviceFixtureData = JSON.parse(
 );
 
 test("fixtures.json passes the fixtures schema", () => {
-  assert.equal(validateFixtures(publishedFixtureData).fixtures.length, 3);
+  const validated = validateFixtures(publishedFixtureData);
+  assert.equal(validated.fixtures.length, 18);
+  assert.equal(validated.displayRound, 20);
+  assert.deepEqual(
+    validated.displayFixtures.map(({ homeTeam, awayTeam }) => [homeTeam, awayTeam]),
+    [
+      ["连云港", "南通"],
+      ["盐城", "徐州"],
+      ["南京", "泰州"]
+    ]
+  );
+  assert.equal(validated.scheduleSources[0].type, "official-schedule");
+  assert.equal(validated.fixtures.every((fixture) => fixture.provenance), true);
+});
+
+test("rejects fixture provenance that does not resolve to a reviewed schedule source", () => {
+  const invalid = structuredClone(publishedFixtureData);
+  invalid.fixtures[3].provenance.sourceId = "unknown-source";
+  assert.throws(() => validateFixtures(invalid), FixturesValidationError);
+});
+
+test("rejects a display projection that differs from canonical fixtures", () => {
+  const invalid = structuredClone(publishedFixtureData);
+  invalid.displayFixtures[0].awayTeam = "无锡";
+  assert.throws(() => validateFixtures(invalid), FixturesValidationError);
 });
 
 test("device fixture covers the device status and score matrix", () => {

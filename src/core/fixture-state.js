@@ -5,6 +5,7 @@ export const FIXTURE_STATUSES = Object.freeze([
   ...EXPLICIT_STATUSES
 ]);
 const SUPPORTED_STATUSES = new Set(FIXTURE_STATUSES);
+export const DISPLAY_ROUND_LEAD_HOURS = 24;
 
 const TIME_ZONE_OFFSETS = Object.freeze({
   "Asia/Shanghai": "+08:00"
@@ -53,17 +54,90 @@ export function deriveScoreState(fixture) {
   };
 }
 
+export function selectCurrentFixtures(
+  data,
+  {
+    now = new Date(),
+    timeZone = "Asia/Shanghai",
+    leadHours = DISPLAY_ROUND_LEAD_HOURS
+  } = {}
+) {
+  const currentInstant = parseInstant(now, "now");
+  if (!Number.isFinite(leadHours) || leadHours < 0) {
+    throw new RangeError("leadHours must be a non-negative number");
+  }
+
+  const groups = new Map();
+  for (const fixture of data.fixtures) {
+    const group = groups.get(fixture.round) ?? [];
+    group.push(fixture);
+    groups.set(fixture.round, group);
+  }
+  const rounds = [...groups.entries()]
+    .map(([round, fixtures]) => ({
+      round,
+      fixtures,
+      kickoff: Math.min(
+        ...fixtures.map((fixture) =>
+          fixtureKickoffInstant(fixture, { timeZone }).getTime()
+        )
+      )
+    }))
+    .sort((left, right) => left.kickoff - right.kickoff || left.round - right.round);
+
+  if (rounds.length === 0) {
+    return {
+      displayRound: null,
+      displaySelectionReason: "NO_FIXTURES",
+      displayFixtures: []
+    };
+  }
+
+  let selectedIndex = 0;
+  for (let index = 1; index < rounds.length; index += 1) {
+    const transitionAt = rounds[index].kickoff - leadHours * 60 * 60 * 1000;
+    if (currentInstant.getTime() >= transitionAt) selectedIndex = index;
+    else break;
+  }
+
+  const selected = rounds[selectedIndex];
+  let displaySelectionReason;
+  if (currentInstant.getTime() < selected.kickoff) {
+    displaySelectionReason = selectedIndex === 0
+      ? "NEXT_UPCOMING_ROUND"
+      : "NEXT_ROUND_WINDOW";
+  } else if (selectedIndex === rounds.length - 1) {
+    displaySelectionReason = "FINAL_ROUND";
+  } else if (selected.fixtures.every((fixture) =>
+    ["finished", "postponed", "cancelled"].includes(fixture.effectiveStatus)
+  )) {
+    displaySelectionReason = "RECENT_TERMINAL_ROUND";
+  } else {
+    displaySelectionReason = "CURRENT_ROUND";
+  }
+
+  return {
+    displayRound: selected.round,
+    displaySelectionReason,
+    displayFixtures: structuredClone(selected.fixtures)
+  };
+}
+
 export function normalizeFixtureStatuses(
   data,
   { now = new Date(), timeZone = "Asia/Shanghai" } = {}
 ) {
   const effectiveStatusAt = parseInstant(now, "now").toISOString();
-  return {
+  const normalized = {
     ...structuredClone(data),
     effectiveStatusAt,
     fixtures: data.fixtures.map((fixture) => ({
       ...fixture,
       effectiveStatus: deriveEffectiveStatus(fixture, { now: effectiveStatusAt, timeZone })
     }))
+  };
+  return {
+    ...normalized,
+    ...selectCurrentFixtures(normalized, { now: effectiveStatusAt, timeZone })
   };
 }

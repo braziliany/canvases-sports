@@ -20,6 +20,7 @@ import {
   matchResultObservationToFixture
 } from "../src/core/result-fixture-matcher.js";
 import { validateResultCandidates } from "../src/core/result-candidates-schema.js";
+import { createUnsettledWeek19Fixtures } from "./helpers/result-fixtures.js";
 
 const projectRoot = new URL("..", import.meta.url);
 const snapshot = JSON.parse(await readFile(
@@ -30,15 +31,7 @@ const publishedFixtures = JSON.parse(await readFile(
   new URL("../data/fixtures.json", import.meta.url),
   "utf8"
 ));
-const fixturesData = structuredClone(publishedFixtures);
-for (const fixture of fixturesData.fixtures) {
-  Object.assign(fixture, {
-    status: "scheduled",
-    effectiveStatus: "live",
-    homeScore: null,
-    awayScore: null
-  });
-}
+const fixturesData = createUnsettledWeek19Fixtures(publishedFixtures);
 
 const officialDataUrls = [
   new URL("../data/fixtures.json", import.meta.url),

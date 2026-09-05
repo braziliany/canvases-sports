@@ -18,20 +18,13 @@ import {
 } from "../src/core/result-candidate-entry.js";
 import { validateResultCandidates } from "../src/core/result-candidates-schema.js";
 import { settleResultCandidate } from "../src/core/result-settlement.js";
+import { createUnsettledWeek19Fixtures } from "./helpers/result-fixtures.js";
 
 const publishedFixturesData = JSON.parse(await readFile(
   new URL("../data/fixtures.json", import.meta.url),
   "utf8"
 ));
-const fixturesData = structuredClone(publishedFixturesData);
-for (const fixture of fixturesData.fixtures) {
-  Object.assign(fixture, {
-    status: "scheduled",
-    effectiveStatus: "live",
-    homeScore: null,
-    awayScore: null
-  });
-}
+const fixturesData = createUnsettledWeek19Fixtures(publishedFixturesData);
 const publishedStandingsText = await readFile(
   new URL("../data/standings.json", import.meta.url),
   "utf8"

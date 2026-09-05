@@ -17,6 +17,7 @@ import {
 import { calculateStandings, isCountedResult } from "../src/core/standings-calculator.js";
 import { adaptJiangsuSnapshot } from "../src/leagues/jiangsu/adapter.js";
 import { buildJiangsuStandings } from "../src/leagues/jiangsu/standings-builder.js";
+import { createUnsettledWeek19Fixtures } from "./helpers/result-fixtures.js";
 
 const source = JSON.parse(await readFile(
   new URL("../data/sources/jiangsu-2026-08-15.json", import.meta.url),
@@ -27,15 +28,7 @@ const publishedFixtures = JSON.parse(await readFile(
   new URL("../data/fixtures.json", import.meta.url),
   "utf8"
 ));
-const formalFixtures = structuredClone(publishedFixtures);
-for (const fixture of formalFixtures.fixtures) {
-  Object.assign(fixture, {
-    status: "scheduled",
-    effectiveStatus: "live",
-    homeScore: null,
-    awayScore: null
-  });
-}
+const formalFixtures = createUnsettledWeek19Fixtures(publishedFixtures);
 
 const CONFIRMED_AT = "2026-08-29T22:05:00+08:00";
 

@@ -1,4 +1,9 @@
-import { deriveEffectiveStatus, FIXTURE_STATUSES } from "./fixture-state.js";
+import {
+  deriveEffectiveStatus,
+  fixtureKickoffInstant,
+  FIXTURE_STATUSES,
+  selectCurrentFixtures
+} from "./fixture-state.js";
 
 export { FIXTURE_STATUSES };
 
@@ -43,6 +48,39 @@ function fixtureSortKey(fixture) {
   return `${fixture.date}T${fixture.time}`;
 }
 
+function isHttpUrl(value) {
+  try {
+    return ["http:", "https:"].includes(new URL(value).protocol);
+  } catch {
+    return false;
+  }
+}
+
+function validateScheduleSources(data, issues) {
+  if (data.scheduleSources === undefined) return null;
+  if (!Array.isArray(data.scheduleSources) || data.scheduleSources.length === 0) {
+    issues.push("scheduleSources must be a non-empty array");
+    return new Set();
+  }
+
+  const ids = new Set();
+  for (const [index, source] of data.scheduleSources.entries()) {
+    const path = `scheduleSources[${index}]`;
+    for (const field of ["id", "name", "type", "url", "publishedAt", "method"]) {
+      if (typeof source?.[field] !== "string" || source[field].trim() === "") {
+        issues.push(`${path}.${field} must be a non-empty string`);
+      }
+    }
+    if (ids.has(source?.id)) issues.push(`${path}.id must be unique`);
+    ids.add(source?.id);
+    if (!isHttpUrl(source?.url)) issues.push(`${path}.url must be HTTP(S)`);
+    if (Number.isNaN(Date.parse(source?.publishedAt))) {
+      issues.push(`${path}.publishedAt must be ISO-8601`);
+    }
+  }
+  return ids;
+}
+
 export function sortFixturesChronologically(fixtures) {
   return structuredClone(fixtures).sort((left, right) =>
     fixtureSortKey(left).localeCompare(fixtureSortKey(right)) || left.id.localeCompare(right.id)
@@ -70,6 +108,7 @@ export function validateFixtures(data) {
     !Number.isNaN(Date.parse(data.effectiveStatusAt));
   if (!effectiveStatusAtIsValid) issues.push("effectiveStatusAt must be ISO-8601");
   if (!Array.isArray(data.fixtures)) issues.push("fixtures must be an array");
+  const scheduleSourceIds = validateScheduleSources(data, issues);
 
   const ids = new Set();
   let previousSortKey = null;
@@ -91,6 +130,28 @@ export function validateFixtures(data) {
     }
     if (!isValidDate(fixture.date)) issues.push(`${path}.date must be YYYY-MM-DD`);
     if (!isValidTime(fixture.time)) issues.push(`${path}.time must be HH:mm`);
+    if (scheduleSourceIds) {
+      if (typeof fixture.kickoff !== "string" || Number.isNaN(Date.parse(fixture.kickoff))) {
+        issues.push(`${path}.kickoff must be ISO-8601`);
+      } else if (isValidDate(fixture.date) && isValidTime(fixture.time) &&
+        Date.parse(fixture.kickoff) !== fixtureKickoffInstant(fixture).getTime()) {
+        issues.push(`${path}.kickoff must match date/time in Asia/Shanghai`);
+      }
+      if (!fixture.provenance || typeof fixture.provenance !== "object") {
+        issues.push(`${path}.provenance is required`);
+      } else {
+        if (!scheduleSourceIds.has(fixture.provenance.sourceId)) {
+          issues.push(`${path}.provenance.sourceId must reference scheduleSources`);
+        }
+        if (!Array.isArray(fixture.provenance.corroboratedBy)) {
+          issues.push(`${path}.provenance.corroboratedBy must be an array`);
+        } else if (new Set(fixture.provenance.corroboratedBy).size !==
+          fixture.provenance.corroboratedBy.length ||
+          fixture.provenance.corroboratedBy.some((id) => !scheduleSourceIds.has(id))) {
+          issues.push(`${path}.provenance.corroboratedBy must contain unique source references`);
+        }
+      }
+    }
     if (typeof fixture.homeTeam !== "string" || fixture.homeTeam.trim() === "") {
       issues.push(`${path}.homeTeam must be a non-empty string`);
     }
@@ -129,6 +190,24 @@ export function validateFixtures(data) {
         issues.push("fixtures must be sorted chronologically");
       }
       previousSortKey = sortKey;
+    }
+  }
+
+  const displayFields = ["displayRound", "displaySelectionReason", "displayFixtures"];
+  const presentDisplayFields = displayFields.filter((field) => field in data);
+  if (presentDisplayFields.length > 0 && presentDisplayFields.length !== displayFields.length) {
+    issues.push("displayRound, displaySelectionReason, and displayFixtures must appear together");
+  } else if (presentDisplayFields.length === displayFields.length && effectiveStatusAtIsValid &&
+    Array.isArray(data.fixtures)) {
+    const expected = selectCurrentFixtures(data, { now: data.effectiveStatusAt });
+    if (data.displayRound !== expected.displayRound) {
+      issues.push(`displayRound must equal ${expected.displayRound}`);
+    }
+    if (data.displaySelectionReason !== expected.displaySelectionReason) {
+      issues.push(`displaySelectionReason must equal ${expected.displaySelectionReason}`);
+    }
+    if (JSON.stringify(data.displayFixtures) !== JSON.stringify(expected.displayFixtures)) {
+      issues.push("displayFixtures must match the selected canonical fixtures");
     }
   }
 

@@ -12,6 +12,7 @@ import { evaluateGitSyncGate } from "../src/core/git-sync-gate.js";
 import { prepareProductionResultSync } from "../src/core/production-result-sync.js";
 import { RECONCILIATION_STATUS, reconcileResultObservations } from "../src/core/result-reconciliation.js";
 import { SourceFetchError, fetchSourceSnapshot } from "../src/core/source-fetch.js";
+import { createUnsettledWeek19Fixtures } from "./helpers/result-fixtures.js";
 
 const fixtures = JSON.parse(await readFile(new URL("../data/fixtures.json", import.meta.url), "utf8"));
 const baseline = JSON.parse(await readFile(new URL("../data/sources/jiangsu-2026-08-22.json", import.meta.url), "utf8"));
@@ -28,18 +29,7 @@ const officialSnapshots = await Promise.all([
 ].map(async ([path, parser]) => ({ snapshot: JSON.parse(await readFile(new URL(path, import.meta.url), "utf8")), parser })));
 
 function unsettledFixtures() {
-  const data = structuredClone(fixtures);
-  data.updatedAt = "2026-08-29T13:33:14.115Z";
-  data.effectiveStatusAt = "2026-08-29T13:33:14.115Z";
-  for (const fixture of data.fixtures) {
-    Object.assign(fixture, {
-      status: "scheduled",
-      effectiveStatus: "live",
-      homeScore: null,
-      awayScore: null
-    });
-  }
-  return data;
+  return createUnsettledWeek19Fixtures(fixtures);
 }
 
 function candidateData(candidates = []) {
