@@ -8,12 +8,19 @@ export const RECONCILIATION_STATUS = Object.freeze({
 });
 
 function scoreKey(item) { return `${item.homeScore}:${item.awayScore}`; }
-function evidenceKey(item) {
-  const url = new URL(item.sourceUrl);
-  return `${item.source.trim().toLowerCase()}|${url.hostname.toLowerCase()}`;
+function normalizedUrl(value) {
+  return new URL(value).href;
 }
 
-export function reconcileResultObservations({ observations, fixturesData }) {
+function sourcePolicyFor(observation, sourcePolicies) {
+  return sourcePolicies.find((policy) =>
+    policy.name === observation.source &&
+    policy.type === observation.sourceType &&
+    normalizedUrl(policy.url) === normalizedUrl(observation.sourceUrl) &&
+    typeof policy.publisherId === "string" && policy.publisherId.trim());
+}
+
+export function reconcileResultObservations({ observations, fixturesData, sourcePolicies = [] }) {
   const matched = [];
   const failures = [];
   const exactKeys = new Set();
@@ -38,8 +45,12 @@ export function reconcileResultObservations({ observations, fixturesData }) {
   const decisions = [];
   for (const [fixtureId, evidence] of groups) {
     const fixture = evidence[0].fixture;
-    const trusted = evidence.filter(({ observation }) =>
-      ["official", "official-republish", "trusted-media"].includes(observation.sourceType));
+    const trusted = evidence.flatMap((item) => {
+      const policy = sourcePolicyFor(item.observation, sourcePolicies);
+      return policy && ["official", "official-republish", "trusted-media"].includes(policy.type)
+        ? [{ ...item, policy }]
+        : [];
+    });
     const scoreGroups = new Map();
     for (const item of trusted) {
       const key = scoreKey(item.observation);
@@ -54,11 +65,10 @@ export function reconcileResultObservations({ observations, fixturesData }) {
       reason = "trusted sources report conflicting scores";
     } else if (scoreGroups.size === 1) {
       const [[key, agreeing]] = scoreGroups;
-      const independentSources = new Set(agreeing.map(({ observation }) => evidenceKey(observation)));
-      const hasOfficial = agreeing.some(({ observation }) => observation.sourceType === "official");
-      const eligibleCorroboration = agreeing.filter(({ observation }) =>
-        ["official-republish", "trusted-media"].includes(observation.sourceType));
-      const eligibleIndependent = new Set(eligibleCorroboration.map(({ observation }) => evidenceKey(observation)));
+      const hasOfficial = agreeing.some(({ policy }) => policy.type === "official");
+      const eligibleCorroboration = agreeing.filter(({ policy }) =>
+        ["official-republish", "trusted-media"].includes(policy.type));
+      const eligibleIndependent = new Set(eligibleCorroboration.map(({ policy }) => policy.publisherId));
       if (hasOfficial || eligibleIndependent.size >= 2) {
         agreedScore = key.split(":").map(Number);
         if (fixture.status === "finished") {

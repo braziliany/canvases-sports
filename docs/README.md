@@ -21,4 +21,4 @@ v0.2 的 Candidate 测试以独立内存/临时数据为输入；正式候选文
 
 Phase 5 将固定权威转载快照解析为 Observation，再经严格 fixture 匹配进入同一 Candidate 合同。机器负责发现，人负责确认；Adapter 不写正式赛果。
 
-生产同步仅在两个独立可信来源一致时自动跨越 Candidate → Fact，并继续复用既有 settlement 与 standings builder。异常仍由人工处理。
+生产同步仅在受控 official 无冲突，或两个不同 `publisherId` 的可信发布者一致时自动跨越 Candidate → Fact，并继续复用既有 settlement 与 standings builder。异常仍由人工处理。

@@ -48,7 +48,7 @@ export async function fetchSourceSnapshot(config, {
   } catch (error) {
     throw new SourceFetchError(`Failed to fetch ${config.name}: ${error.message}`, error);
   }
-  if (!response?.ok) {
+  if (response?.status !== 200) {
     throw new SourceFetchError(`Failed to fetch ${config.name}: HTTP ${response?.status ?? "unknown"}`);
   }
   const contentType = response.headers?.get?.("content-type") ?? "";
@@ -61,10 +61,20 @@ export async function fetchSourceSnapshot(config, {
       throw new SourceFetchError(`Unexpected content from ${config.name}: missing marker ${marker}`);
     }
   }
-  const rawText = htmlParagraphsToText(html);
+  let rawText = htmlParagraphsToText(html);
+  if (config.contentLineMarkers?.length) {
+    rawText = rawText.split("\n")
+      .filter((line) => config.contentLineMarkers.every((marker) => line.includes(marker)))
+      .join("\n");
+  }
   if (!rawText) throw new SourceFetchError(`Unexpected content from ${config.name}: no article paragraphs`);
   const hash = contentHash(rawText);
-  const retrievedAt = previousSnapshot?.contentHash === hash &&
+  const reusablePreviousSnapshot = previousSnapshot?.adapter === config.adapter &&
+    previousSnapshot?.source?.name === config.name &&
+    previousSnapshot?.source?.type === config.type &&
+    previousSnapshot?.source?.url === config.url &&
+    JSON.stringify(previousSnapshot?.context) === JSON.stringify(config.context);
+  const retrievedAt = reusablePreviousSnapshot && previousSnapshot?.contentHash === hash &&
     typeof previousSnapshot?.source?.retrievedAt === "string"
     ? previousSnapshot.source.retrievedAt
     : new Date(now).toISOString();

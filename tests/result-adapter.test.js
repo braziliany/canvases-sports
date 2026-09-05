@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { access, cp, mkdtemp, readFile, readdir, rm } from "node:fs/promises";
+import { access, cp, mkdtemp, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import { spawnSync } from "node:child_process";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -9,6 +9,7 @@ import {
   AdapterParseError,
   parseYangtzeEveningNewsResults
 } from "../src/adapters/results/yangtze-evening-news.js";
+import { parseControlledFinalReport } from "../src/adapters/results/controlled-final-report.js";
 import {
   createCandidateFromObservation,
   discoverResultCandidates
@@ -117,7 +118,10 @@ test("adapter preserves zero and accepts supported non-negative score forms", ()
     "庚队5:1辛队"
   ].join("\n");
   assert.deepEqual(
-    parseYangtzeEveningNewsResults(scoreSnapshot).map((item) => [item.homeScore, item.awayScore]),
+    parseControlledFinalReport(scoreSnapshot, {
+      adapter: scoreSnapshot.adapter,
+      sourceType: scoreSnapshot.source.type
+    }).map((item) => [item.homeScore, item.awayScore]),
     [[0, 0], [1, 0], [0, 2], [5, 1]]
   );
 });
@@ -231,7 +235,8 @@ test("results:discover dry-run leaves every formal data file byte-identical", as
     encoding: "utf8"
   });
   assert.equal(execution.status, 0, execution.stderr);
-  assert.match(execution.stdout, /Discovered 3 new result candidates/);
+  assert.match(execution.stdout, /Parsed 3 observations/);
+  assert.match(execution.stdout, /Discovered \d+ new result candidates/);
   assert.equal(await readFile(new URL("../data/fixtures.json", import.meta.url), "utf8"), fixturesBefore);
   assert.equal(await readFile(new URL("../data/standings.json", import.meta.url), "utf8"), standingsBefore);
   assert.equal(await readFile(new URL("../data/result-candidates.json", import.meta.url), "utf8"), candidatesBefore);
@@ -297,6 +302,8 @@ test("results:discover ADD writes only an explicit Node-created isolation direct
     await cp(fileURLToPath(new URL("../data", import.meta.url)), isolatedDataDirectory, {
       recursive: true
     });
+    await writeFile(join(isolatedDataDirectory, "fixtures.json"), `${JSON.stringify(fixturesData, null, 2)}\n`);
+    await writeFile(join(isolatedDataDirectory, "result-candidates.json"), `${JSON.stringify(candidateData(), null, 2)}\n`);
     const addExecution = spawnSync(process.execPath, [
       "scripts/discover-results.mjs",
       "--isolated-data-dir",

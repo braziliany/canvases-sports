@@ -2,7 +2,8 @@
 
 ## Unreleased — v0.2 production data sync
 
-- Added two controlled online result fetchers with stable provenance snapshots.
+- Added five controlled online result fetchers across four explicitly identified publishers with stable provenance snapshots.
+- Prevented same-publisher mirrors or unregistered source labels from satisfying automatic reconciliation.
 - Added conservative multi-source reconciliation and automatic settlement through the existing settlement core.
 - Added the 2026-08-22 transitional baseline and official 2026-08-29 standings cross-check.
 - Added a minimal-permission GitHub Actions workflow that publishes only validated data changes.

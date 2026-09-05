@@ -178,4 +178,9 @@ rendering have been verified on-device.
 
 ## Production result sync
 
-`npm run results:sync -- --dry-run` fetches two fixed trusted sources and previews reconciliation and settlement. `npm run results:sync` reuses ResultCandidate, settlement, transaction, and `buildJiangsuStandings` to publish only sufficiently corroborated facts. Conflicts and insufficient evidence remain in the human-review path. See [v0.2 production data sync](docs/v0.2-production-data-sync.md).
+`npm run results:sync -- --dry-run` fetches five controlled sources from four independent publisher identities and previews reconciliation and settlement. `npm run results:sync` reuses ResultCandidate, settlement, transaction, and `buildJiangsuStandings` to publish only sufficiently corroborated facts. Conflicts and insufficient evidence remain in the human-review path. See [v0.2 production data sync](docs/v0.2-production-data-sync.md).
+
+Development-branch Raw endpoints:
+
+- Fixtures: `https://raw.githubusercontent.com/braziliany/canvases-sports/codex/effective-status/data/fixtures.json`
+- Standings: `https://raw.githubusercontent.com/braziliany/canvases-sports/codex/effective-status/data/standings.json`

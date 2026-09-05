@@ -63,5 +63,38 @@ export function parseControlledFinalReport(snapshot, options) {
     observations.push(observation);
   }
   if (!observations.length) throw new AdapterParseError("No supported final-result lines were found in snapshot rawText");
+  if (options.expectedMatches) {
+    const actual = new Set(observations.map((item) => `${item.homeTeam}\0${item.awayTeam}`));
+    const missing = options.expectedMatches.filter(([home, away]) => !actual.has(`${home}\0${away}`));
+    if (missing.length || actual.size !== options.expectedMatches.length) {
+      throw new AdapterParseError("Snapshot does not contain the complete expected fixture set");
+    }
+  }
   return observations;
+}
+
+export function parseControlledResultStatement(snapshot, options) {
+  assertSnapshot(snapshot, options);
+  const match = snapshot.rawText.match(options.scorePattern);
+  if (!match?.groups) throw new AdapterParseError("Expected final score statement was not found");
+  const homeScore = Number(match.groups.homeScore);
+  const awayScore = Number(match.groups.awayScore);
+  try {
+    return [validateResultObservation({
+      leagueId: snapshot.context.leagueId.trim(),
+      season: snapshot.context.season,
+      round: snapshot.context.round,
+      matchDate: snapshot.context.date,
+      homeTeam: options.homeTeam,
+      awayTeam: options.awayTeam,
+      homeScore,
+      awayScore,
+      source: snapshot.source.name.trim(),
+      sourceType: snapshot.source.type,
+      sourceUrl: new URL(snapshot.source.url).href,
+      observedAt: new Date(snapshot.source.retrievedAt).toISOString()
+    })];
+  } catch (error) {
+    throw new AdapterParseError(`Invalid final score statement: ${error.message}`);
+  }
 }

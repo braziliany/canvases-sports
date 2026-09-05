@@ -13,7 +13,11 @@ export function buildJiangsuStandings({ source, fixturesData, rankingReference =
     fixtureKickoffInstant(fixture) > baselineInstant
   );
   const countedIds = new Set(postBaselineFixtures.filter(isCountedResult).map((fixture) => fixture.id));
-  const applicableReference = rankingReference?.requiredFixtureIds?.every((id) => countedIds.has(id))
+  const requiredFixtureIds = rankingReference?.requiredFixtureIds;
+  const applicableReference = Array.isArray(requiredFixtureIds) &&
+    new Set(requiredFixtureIds).size === requiredFixtureIds.length &&
+    countedIds.size === requiredFixtureIds.length &&
+    requiredFixtureIds.every((id) => countedIds.has(id))
     ? rankingReference
     : null;
 

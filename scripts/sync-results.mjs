@@ -3,6 +3,11 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseYangtzeEveningNewsResults } from "../src/adapters/results/yangtze-evening-news.js";
 import { parseXinhuaDailyHuaweiResults } from "../src/adapters/results/xinhua-daily-huawei.js";
+import {
+  parseChangzhouSportsBureauResult,
+  parseHuaianPoliceResult,
+  parseYangzhouReleaseResult
+} from "../src/adapters/results/official-local-government.js";
 import { resolveCliDataDirectory } from "../src/core/cli-data-directory.js";
 import { commitJsonFilesAtomically } from "../src/core/json-file-transaction.js";
 import { prepareProductionResultSync } from "../src/core/production-result-sync.js";
@@ -14,6 +19,9 @@ const officialDataDirectory = resolve(projectRoot, "data");
 const adapters = new Map([
   ["yangtze-evening-news-final-report-v1", parseYangtzeEveningNewsResults],
   ["xinhua-daily-huawei-final-report-v1", parseXinhuaDailyHuaweiResults]
+  ,["changzhou-sports-bureau-final-result-v1", parseChangzhouSportsBureauResult]
+  ,["huaian-police-final-result-v1", parseHuaianPoliceResult]
+  ,["yangzhou-release-final-result-v1", parseYangzhouReleaseResult]
 ]);
 
 async function readJson(path) { return JSON.parse(await readFile(path, "utf8")); }
@@ -50,7 +58,8 @@ async function main() {
     return adapter(data);
   });
   const prepared = prepareProductionResultSync({
-    source, rankingReference, fixturesData, candidatesData, observations, confirmedAt: now.toISOString()
+    source, rankingReference, fixturesData, candidatesData, observations, confirmedAt: now.toISOString(),
+    sourcePolicies: RESULT_SOURCES
   });
 
   console.log(`Fetched ${snapshots.length} trusted sources.`);
@@ -71,6 +80,9 @@ async function main() {
   for (const snapshot of snapshots) originals.set(snapshot.path, await readOptionalJson(snapshot.path));
   const changedEntries = entries.filter((entry) => !sameJson(originals.get(entry.path), entry.data));
   if (dryRun) {
+    for (const entry of changedEntries) {
+      console.log(`Would change: ${entry.path.slice(dataSelection.dataDirectory.length + 1)}`);
+    }
     console.log(`Dry run complete: ${changedEntries.length} files would change. No files were written.`);
     return;
   }

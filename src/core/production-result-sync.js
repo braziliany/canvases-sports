@@ -6,10 +6,10 @@ import { validateResultCandidates } from "./result-candidates-schema.js";
 import { settleResultCandidate } from "./result-settlement.js";
 import { validateStandings } from "./schema.js";
 
-export function prepareProductionResultSync({ source, rankingReference, fixturesData, candidatesData, observations, confirmedAt }) {
+export function prepareProductionResultSync({ source, rankingReference, fixturesData, candidatesData, observations, confirmedAt, sourcePolicies = [] }) {
   let fixtures = validateFixtures(fixturesData);
   let candidates = validateResultCandidates(candidatesData);
-  const reconciliation = reconcileResultObservations({ observations, fixturesData: fixtures });
+  const reconciliation = reconcileResultObservations({ observations, fixturesData: fixtures, sourcePolicies });
   if (reconciliation.failures.length) {
     throw new Error(`Production reconciliation failed: ${reconciliation.failures.map((x) => x.message).join("; ")}`);
   }
@@ -37,6 +37,11 @@ export function prepareProductionResultSync({ source, rankingReference, fixtures
       candidate.fixtureId === decision.fixtureId &&
       candidate.homeScore === decision.score[0] && candidate.awayScore === decision.score[1] &&
       evidenceUrls.has(candidate.sourceUrl));
+    const inconsistentConfirmed = matchingCandidates.find((candidate) =>
+      candidate.reviewStatus === "confirmed" && decision.fixture.status !== "finished");
+    if (inconsistentConfirmed) {
+      throw new Error(`Audit inconsistency: confirmed candidate ${inconsistentConfirmed.id} has a non-finished fixture`);
+    }
     for (const candidate of matchingCandidates) {
       if (candidate.reviewStatus === "confirmed") continue;
       const prepared = settleResultCandidate({
