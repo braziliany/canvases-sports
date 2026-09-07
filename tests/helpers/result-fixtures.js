@@ -32,3 +32,18 @@ export function createUnsettledWeek19Fixtures(publishedFixtures, { now = DEFAULT
   delete normalized.displayFixtures;
   return normalized;
 }
+
+export function createUnsettledRoundFixtures(publishedFixtures, round, {
+  now = "2026-09-07T12:00:00.000Z"
+} = {}) {
+  const data = structuredClone(publishedFixtures);
+  for (const fixture of data.fixtures) {
+    if (fixture.round !== round) continue;
+    fixture.status = "scheduled";
+    fixture.effectiveStatus = "scheduled";
+    fixture.homeScore = null;
+    fixture.awayScore = null;
+  }
+  data.updatedAt = new Date(now).toISOString();
+  return normalizeFixtureStatuses(data, { now });
+}

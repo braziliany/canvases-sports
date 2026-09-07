@@ -149,7 +149,8 @@ selector keeps the current/recent week until 24 hours before the next kickoff.
 the dedicated fixture workflow publishes only validated semantic changes.
 Only fixtures with source `status: finished` and two real scores enter standings
 settlement. The current builder uses a reviewed 2026-08-22 carry-forward baseline
-and an official 2026-08-29 ranking cross-check until full-season fixtures are backfilled.
+and selects the official ranking cross-check whose finished-fixture set exactly
+matches the published facts (currently the 2026-09-05 table).
 `data/result-candidates.json` isolates observed scores from authoritative facts.
 It may legitimately contain pending or confirmed candidates. Tests validate the
 candidate contract, fixture links, audit state, and explicit pollution markers;
@@ -184,7 +185,7 @@ rendering have been verified on-device.
 
 ## Production result sync
 
-`npm run results:sync -- --dry-run` fetches four controlled sources from four independent publisher identities and previews reconciliation and settlement. `npm run results:sync` reuses ResultCandidate, settlement, transaction, and `buildJiangsuStandings` to publish only sufficiently corroborated facts. Conflicts and insufficient evidence remain in the human-review path. See [v0.2 production data sync](docs/v0.2-production-data-sync.md).
+`npm run results:sync -- --dry-run` fetches six controlled sources and previews reconciliation and settlement. Week 20 is corroborated by two independent publisher identities: 新华日报微信公众号 and 南京晨报. `npm run results:sync` reuses ResultCandidate, settlement, transaction, and `buildJiangsuStandings` to publish only sufficiently corroborated facts. Conflicts and insufficient evidence remain in the human-review path. See [v0.2 production data sync](docs/v0.2-production-data-sync.md).
 
 Development-branch Raw endpoints:
 

@@ -38,12 +38,14 @@
 - ✅ 第 19–22 周正式赛历、逐场 provenance 与 9/5、9/12 组委会公告复核
 - ✅ `displayFixtures` 当前比赛周投影与提前 24 小时确定性切换
 - ✅ 独立 Fixture Presentation Sync，不依赖 Result Pipeline 推进展示时间
+- ✅ 第 20 周两家独立 publisher 赛果结算与 9 月 5 日官方积分榜逐字段核对
+- ✅ 第 20–22 周 deterministic season-flow 与 Fixture/Result Sync 顺序收敛回归
 
 继续复用 `Repeat Each → Create View → Chained Update → Repeat Results → Grid.Children`，不设计第二套动态列表机制。
 
 状态：**Canvases Sports v0.2 production data pipeline complete; awaiting device acceptance**。
 
-生产收尾：✅ 4 个受控赛果来源 / 4 个独立 publisher identity；✅ 稳定 Snapshot；✅ 保守 reconciliation；✅ 自动结算与 standings 派生；✅ 第 19–22 周赛历与 current-fixture 派生；✅ GitHub Actions 按变化发布。后续仍需扩展新比赛周来源配置与完整历史 fixtures。
+生产收尾：✅ 6 个受控赛果来源；✅ 稳定 Snapshot；✅ 保守 reconciliation；✅ 第 19、20 周自动结算与 standings 派生；✅ 第 19–22 周赛历与 current-fixture 派生；✅ GitHub Actions 按变化发布。第 21/22 周未来只新增受控来源/Adapter/Snapshot 与对应官方榜单参考，不改核心链路。完整历史 fixtures 仍待回填。
 
 ## v0.3 — 赛事入口页
 

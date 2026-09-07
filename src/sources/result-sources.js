@@ -4,12 +4,23 @@ import {
   HUAIAN_POLICE_ADAPTER,
   YANGZHOU_RELEASE_ADAPTER
 } from "../adapters/results/official-local-government.js";
+import {
+  NANJING_MORNING_POST_WEEK20_ADAPTER,
+  XINHUA_DAILY_WECHAT_WEEK20_ADAPTER
+} from "../adapters/results/week20-final-reports.js";
 
 const context = Object.freeze({
   leagueId: "jiangsu-city-football-league",
   season: 2026,
   round: 19,
   date: "2026-08-29"
+});
+
+const week20Context = Object.freeze({
+  leagueId: "jiangsu-city-football-league",
+  season: 2026,
+  round: 20,
+  date: "2026-09-05"
 });
 
 export const RESULT_SOURCES = Object.freeze([
@@ -61,5 +72,39 @@ export const RESULT_SOURCES = Object.freeze([
     requiredMarkers: Object.freeze(["扬州发布", "扬州队VS宿迁队整场比赛结束", "比分定格"]),
     contentLineMarkers: Object.freeze(["扬州队VS宿迁队整场比赛结束", "比分定格"]),
     context
+  }),
+  Object.freeze({
+    id: "xinhua-daily-wechat-week20",
+    publisherId: "xinhua-daily-media-group",
+    fileName: "2026-09-05-w20-xinhua-daily-wechat.json",
+    adapter: XINHUA_DAILY_WECHAT_WEEK20_ADAPTER,
+    name: "新华日报微信公众号（扬子晚报转载）",
+    type: "official-republish",
+    title: "“苏超”积分榜更新！无锡队盐城队宿迁队暂列前三",
+    url: "https://www.yzwb.net/news/qjsc/202609/t20260905_389881.html",
+    requiredMarkers: Object.freeze([
+      "第20周比赛结束",
+      "连云港队0:1南通队",
+      "盐城队1:1徐州队",
+      "南京队2:2泰州队"
+    ]),
+    context: week20Context
+  }),
+  Object.freeze({
+    id: "nanjing-morning-post-week20",
+    publisherId: "nanjing-daily-media-group",
+    fileName: "2026-09-05-w20-nanjing-morning-post.json",
+    adapter: NANJING_MORNING_POST_WEEK20_ADAPTER,
+    name: "南京晨报（新浪财经转载）",
+    type: "trusted-media",
+    title: "“苏超”抢“八”白热化，悬念留至最后时刻",
+    url: "https://finance.sina.com.cn/jjxw/2026-09-07/doc-iniqxiqs6133523.shtml",
+    requiredMarkers: Object.freeze([
+      "来源：南京晨报",
+      "最终以2比2握手言和",
+      "盐城队1比1战平徐州队",
+      "0比1不敌南通队"
+    ]),
+    context: week20Context
   })
 ]);

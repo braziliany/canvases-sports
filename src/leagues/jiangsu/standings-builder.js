@@ -13,13 +13,15 @@ export function buildJiangsuStandings({ source, fixturesData, rankingReference =
     fixtureKickoffInstant(fixture) > baselineInstant
   );
   const countedIds = new Set(postBaselineFixtures.filter(isCountedResult).map((fixture) => fixture.id));
-  const requiredFixtureIds = rankingReference?.requiredFixtureIds;
-  const applicableReference = Array.isArray(requiredFixtureIds) &&
-    new Set(requiredFixtureIds).size === requiredFixtureIds.length &&
-    countedIds.size === requiredFixtureIds.length &&
-    requiredFixtureIds.every((id) => countedIds.has(id))
-    ? rankingReference
-    : null;
+  const references = (Array.isArray(rankingReference) ? rankingReference : [rankingReference])
+    .filter(Boolean);
+  const applicableReference = references.find((reference) => {
+    const requiredFixtureIds = reference?.requiredFixtureIds;
+    return Array.isArray(requiredFixtureIds) &&
+      new Set(requiredFixtureIds).size === requiredFixtureIds.length &&
+      countedIds.size === requiredFixtureIds.length &&
+      requiredFixtureIds.every((id) => countedIds.has(id));
+  }) ?? null;
 
   return validateStandings(calculateStandings({
     baseline,

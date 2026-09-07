@@ -1,27 +1,16 @@
 import { readFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { parseYangtzeEveningNewsResults } from "../src/adapters/results/yangtze-evening-news.js";
-import {
-  parseChangzhouSportsBureauResult,
-  parseHuaianPoliceResult,
-  parseYangzhouReleaseResult
-} from "../src/adapters/results/official-local-government.js";
+import { RESULT_ADAPTERS } from "../src/adapters/results/registry.js";
 import { resolveCliDataDirectory } from "../src/core/cli-data-directory.js";
 import { commitJsonFilesAtomically } from "../src/core/json-file-transaction.js";
 import { prepareProductionResultSync } from "../src/core/production-result-sync.js";
 import { fetchSourceSnapshot } from "../src/core/source-fetch.js";
 import { RESULT_SOURCES } from "../src/sources/result-sources.js";
+import { JIANGSU_STANDINGS_REFERENCE_FILES } from "../src/sources/standings-references.js";
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const officialDataDirectory = resolve(projectRoot, "data");
-const adapters = new Map([
-  ["yangtze-evening-news-final-report-v1", parseYangtzeEveningNewsResults],
-  ["changzhou-sports-bureau-final-result-v1", parseChangzhouSportsBureauResult],
-  ["huaian-police-final-result-v1", parseHuaianPoliceResult],
-  ["yangzhou-release-final-result-v1", parseYangzhouReleaseResult]
-]);
-
 async function readJson(path) { return JSON.parse(await readFile(path, "utf8")); }
 async function readOptionalJson(path) {
   try { return await readJson(path); } catch (error) { if (error.code === "ENOENT") return null; throw error; }
@@ -37,12 +26,12 @@ async function main() {
     fixtures: resolve(dataSelection.dataDirectory, "fixtures.json"),
     standings: resolve(dataSelection.dataDirectory, "standings.json"),
     candidates: resolve(dataSelection.dataDirectory, "result-candidates.json"),
-    baseline: resolve(dataSelection.dataDirectory, "sources/jiangsu-2026-08-22.json"),
-    rankingReference: resolve(dataSelection.dataDirectory, "sources/results/2026-08-29-w19-official-standings-reference.json")
+    baseline: resolve(dataSelection.dataDirectory, "sources/jiangsu-2026-08-22.json")
   };
   const [fixturesData, standingsData, candidatesData, source, rankingReference] = await Promise.all([
     readJson(paths.fixtures), readJson(paths.standings), readJson(paths.candidates), readJson(paths.baseline),
-    readJson(paths.rankingReference)
+    Promise.all(JIANGSU_STANDINGS_REFERENCE_FILES.map((fileName) =>
+      readJson(resolve(dataSelection.dataDirectory, "sources/results", fileName))))
   ]);
   const now = new Date();
   const snapshots = await Promise.all(RESULT_SOURCES.map(async (config) => {
@@ -51,7 +40,7 @@ async function main() {
     return { path, data: await fetchSourceSnapshot(config, { previousSnapshot, now }) };
   }));
   const observations = snapshots.flatMap(({ data }) => {
-    const adapter = adapters.get(data.adapter);
+    const adapter = RESULT_ADAPTERS.get(data.adapter);
     if (!adapter) throw new Error(`No adapter registered for ${data.adapter}`);
     return adapter(data);
   });

@@ -6,7 +6,7 @@
     "shortName": "苏超",
     "season": 2026
   },
-  "updatedAt": "2026-09-06T00:15:00.000Z",
+  "updatedAt": "2026-09-07T12:32:23.144Z",
   "stage": "regular-season",
   "qualification": {
     "type": "top",
@@ -34,13 +34,16 @@
     "countedFixtureIds": [
       "2026-regular-w19-changzhou-wuxi",
       "2026-regular-w19-huaian-lianyungang",
-      "2026-regular-w19-yangzhou-suqian"
+      "2026-regular-w19-yangzhou-suqian",
+      "2026-regular-w20-lianyungang-nantong",
+      "2026-regular-w20-yancheng-xuzhou",
+      "2026-regular-w20-nanjing-taizhou"
     ],
     "rankingReference": {
-      "name": "新华日报（华为资讯官方账号）",
-      "url": "https://feeds-drcn.cloud.huawei.com.cn/landingpage/latest?channel=HW_JINGXUAN_ZH&cpid=666&ctype=news&docid=1051754ID2BEE8J44UHZRN&dy_scenario=relate&emuiVer=27&pageType=26&r=CN&tn=9e440d31fbc2c0f47f7bd803df36c0eb7d63e2a759dc117f448b109d7e01f61e&to_app=hwbrowser",
-      "imageUrl": "https://contentcenter-drcn.dbankcdn.cn/img/pub_1/Browser_contentImg_1754_8/0b/v3/1051754ID2BEE8J44UHZRN/da570139a7684eda93230a7d21a49bf7_5_1/hd.webp",
-      "publishedAt": "2026-08-29T22:00:00+08:00",
+      "name": "新华日报微信公众号（扬子晚报转载）",
+      "url": "https://www.yzwb.net/news/qjsc/202609/t20260905_389881.html",
+      "imageUrl": "https://imgcdn.yzwb.net/%40/catchimages/20260905/1788618179951078091.jpg",
+      "publishedAt": "2026-09-05T22:23:00+08:00",
       "method": "human-reviewed-official-image-transcription"
     }
   },
@@ -74,14 +77,14 @@
         "shortName": "盐城",
         "logo": null
       },
-      "played": 9,
+      "played": 10,
       "won": 5,
-      "drawn": 2,
+      "drawn": 3,
       "lost": 2,
-      "goalsFor": 9,
-      "goalsAgainst": 6,
+      "goalsFor": 10,
+      "goalsAgainst": 7,
       "goalDifference": 3,
-      "points": 17
+      "points": 18
     },
     {
       "rank": 3,
@@ -104,8 +107,27 @@
     },
     {
       "rank": 4,
+      "previousRank": 5,
+      "trend": 1,
+      "team": {
+        "id": "xuzhou",
+        "name": "徐州",
+        "shortName": "徐州",
+        "logo": null
+      },
+      "played": 10,
+      "won": 4,
+      "drawn": 4,
+      "lost": 2,
+      "goalsFor": 12,
+      "goalsAgainst": 6,
+      "goalDifference": 6,
+      "points": 16
+    },
+    {
+      "rank": 5,
       "previousRank": 4,
-      "trend": 0,
+      "trend": -1,
       "team": {
         "id": "suzhou",
         "name": "苏州",
@@ -122,9 +144,9 @@
       "points": 16
     },
     {
-      "rank": 5,
+      "rank": 6,
       "previousRank": 3,
-      "trend": -2,
+      "trend": -3,
       "team": {
         "id": "changzhou",
         "name": "常州",
@@ -141,25 +163,6 @@
       "points": 16
     },
     {
-      "rank": 6,
-      "previousRank": 5,
-      "trend": -1,
-      "team": {
-        "id": "xuzhou",
-        "name": "徐州",
-        "shortName": "徐州",
-        "logo": null
-      },
-      "played": 9,
-      "won": 4,
-      "drawn": 3,
-      "lost": 2,
-      "goalsFor": 11,
-      "goalsAgainst": 5,
-      "goalDifference": 6,
-      "points": 15
-    },
-    {
       "rank": 7,
       "previousRank": 7,
       "trend": 0,
@@ -169,14 +172,14 @@
         "shortName": "南通",
         "logo": null
       },
-      "played": 9,
-      "won": 3,
+      "played": 10,
+      "won": 4,
       "drawn": 4,
       "lost": 2,
-      "goalsFor": 7,
+      "goalsFor": 8,
       "goalsAgainst": 8,
-      "goalDifference": -1,
-      "points": 13
+      "goalDifference": 0,
+      "points": 16
     },
     {
       "rank": 8,
@@ -188,14 +191,14 @@
         "shortName": "南京",
         "logo": null
       },
-      "played": 10,
+      "played": 11,
       "won": 3,
-      "drawn": 3,
+      "drawn": 4,
       "lost": 4,
-      "goalsFor": 6,
-      "goalsAgainst": 7,
+      "goalsFor": 8,
+      "goalsAgainst": 9,
       "goalDifference": -1,
-      "points": 12
+      "points": 13
     },
     {
       "rank": 9,
@@ -207,14 +210,14 @@
         "shortName": "泰州",
         "logo": null
       },
-      "played": 9,
+      "played": 10,
       "won": 3,
-      "drawn": 3,
+      "drawn": 4,
       "lost": 3,
-      "goalsFor": 9,
-      "goalsAgainst": 11,
+      "goalsFor": 11,
+      "goalsAgainst": 13,
       "goalDifference": -2,
-      "points": 12
+      "points": 13
     },
     {
       "rank": 10,
@@ -283,13 +286,13 @@
         "shortName": "连云港",
         "logo": null
       },
-      "played": 10,
+      "played": 11,
       "won": 0,
       "drawn": 4,
-      "lost": 6,
+      "lost": 7,
       "goalsFor": 3,
-      "goalsAgainst": 12,
-      "goalDifference": -9,
+      "goalsAgainst": 13,
+      "goalDifference": -10,
       "points": 4
     }
   ]

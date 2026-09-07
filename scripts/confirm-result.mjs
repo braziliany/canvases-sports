@@ -12,6 +12,7 @@ import {
   prepareResultSettlement
 } from "../src/core/result-settlement-pipeline.js";
 import { formatResultCandidateReview } from "../src/core/result-settlement.js";
+import { JIANGSU_STANDINGS_REFERENCE_FILES } from "../src/sources/standings-references.js";
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const officialDataDirectory = resolve(projectRoot, "data");
@@ -66,7 +67,6 @@ async function main() {
     fixtures: resolve(dataSelection.dataDirectory, "fixtures.json"),
     standings: resolve(dataSelection.dataDirectory, "standings.json"),
     candidates: resolve(dataSelection.dataDirectory, "result-candidates.json")
-    ,rankingReference: resolve(dataSelection.dataDirectory, "sources/results/2026-08-29-w19-official-standings-reference.json")
   };
   if (dataSelection.isolated) {
     console.log(`Isolation data directory: ${dataSelection.dataDirectory}`);
@@ -75,7 +75,8 @@ async function main() {
     readJson(paths.source),
     readJson(paths.fixtures),
     readJson(paths.candidates),
-    readJson(paths.rankingReference)
+    Promise.all(JIANGSU_STANDINGS_REFERENCE_FILES.map((fileName) =>
+      readJson(resolve(dataSelection.dataDirectory, "sources/results", fileName))))
   ]);
   validateFixtures(fixturesData);
   validateResultCandidates(candidatesData);

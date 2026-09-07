@@ -10,6 +10,9 @@
 - Added conservative multi-source reconciliation and automatic settlement through the existing settlement core.
 - Added the 2026-08-22 transitional baseline and official 2026-08-29 standings cross-check.
 - Added a minimal-permission GitHub Actions workflow that publishes only validated data changes.
+- Added two independently identified week-20 result sources and settled the three 2026-09-05 results through the existing pipeline.
+- Added the official 2026-09-05 standings reference with full row reconciliation.
+- Added deterministic season-flow and fixture/result sync-order tests through the final regular-season week.
 
 ## [Unreleased]
 

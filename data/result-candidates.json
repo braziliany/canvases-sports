@@ -4,7 +4,7 @@
     "id": "jiangsu-city-football-league",
     "season": 2026
   },
-  "updatedAt": "2026-09-05T12:11:32.223Z",
+  "updatedAt": "2026-09-07T12:32:23.144Z",
   "candidates": [
     {
       "id": "2026-regular-w19-huaian-lianyungang-result-20260905T121132223Z",
@@ -83,6 +83,84 @@
       "observedAt": "2026-09-05T12:11:32.223Z",
       "reviewStatus": "confirmed",
       "confirmedAt": "2026-09-05T12:11:32.223Z"
+    },
+    {
+      "id": "2026-regular-w20-lianyungang-nantong-result-20260907T123223144Z",
+      "fixtureId": "2026-regular-w20-lianyungang-nantong",
+      "homeTeam": "连云港",
+      "awayTeam": "南通",
+      "homeScore": 0,
+      "awayScore": 1,
+      "source": "新华日报微信公众号（扬子晚报转载）",
+      "sourceUrl": "https://www.yzwb.net/news/qjsc/202609/t20260905_389881.html",
+      "observedAt": "2026-09-07T12:32:23.144Z",
+      "reviewStatus": "confirmed",
+      "confirmedAt": "2026-09-07T12:32:23.144Z"
+    },
+    {
+      "id": "2026-regular-w20-yancheng-xuzhou-result-20260907T123223144Z",
+      "fixtureId": "2026-regular-w20-yancheng-xuzhou",
+      "homeTeam": "盐城",
+      "awayTeam": "徐州",
+      "homeScore": 1,
+      "awayScore": 1,
+      "source": "新华日报微信公众号（扬子晚报转载）",
+      "sourceUrl": "https://www.yzwb.net/news/qjsc/202609/t20260905_389881.html",
+      "observedAt": "2026-09-07T12:32:23.144Z",
+      "reviewStatus": "confirmed",
+      "confirmedAt": "2026-09-07T12:32:23.144Z"
+    },
+    {
+      "id": "2026-regular-w20-nanjing-taizhou-result-20260907T123223144Z",
+      "fixtureId": "2026-regular-w20-nanjing-taizhou",
+      "homeTeam": "南京",
+      "awayTeam": "泰州",
+      "homeScore": 2,
+      "awayScore": 2,
+      "source": "新华日报微信公众号（扬子晚报转载）",
+      "sourceUrl": "https://www.yzwb.net/news/qjsc/202609/t20260905_389881.html",
+      "observedAt": "2026-09-07T12:32:23.144Z",
+      "reviewStatus": "confirmed",
+      "confirmedAt": "2026-09-07T12:32:23.144Z"
+    },
+    {
+      "id": "2026-regular-w20-lianyungang-nantong-result-20260907T123223144Z-2",
+      "fixtureId": "2026-regular-w20-lianyungang-nantong",
+      "homeTeam": "连云港",
+      "awayTeam": "南通",
+      "homeScore": 0,
+      "awayScore": 1,
+      "source": "南京晨报（新浪财经转载）",
+      "sourceUrl": "https://finance.sina.com.cn/jjxw/2026-09-07/doc-iniqxiqs6133523.shtml",
+      "observedAt": "2026-09-07T12:32:23.144Z",
+      "reviewStatus": "confirmed",
+      "confirmedAt": "2026-09-07T12:32:23.144Z"
+    },
+    {
+      "id": "2026-regular-w20-yancheng-xuzhou-result-20260907T123223144Z-2",
+      "fixtureId": "2026-regular-w20-yancheng-xuzhou",
+      "homeTeam": "盐城",
+      "awayTeam": "徐州",
+      "homeScore": 1,
+      "awayScore": 1,
+      "source": "南京晨报（新浪财经转载）",
+      "sourceUrl": "https://finance.sina.com.cn/jjxw/2026-09-07/doc-iniqxiqs6133523.shtml",
+      "observedAt": "2026-09-07T12:32:23.144Z",
+      "reviewStatus": "confirmed",
+      "confirmedAt": "2026-09-07T12:32:23.144Z"
+    },
+    {
+      "id": "2026-regular-w20-nanjing-taizhou-result-20260907T123223144Z-2",
+      "fixtureId": "2026-regular-w20-nanjing-taizhou",
+      "homeTeam": "南京",
+      "awayTeam": "泰州",
+      "homeScore": 2,
+      "awayScore": 2,
+      "source": "南京晨报（新浪财经转载）",
+      "sourceUrl": "https://finance.sina.com.cn/jjxw/2026-09-07/doc-iniqxiqs6133523.shtml",
+      "observedAt": "2026-09-07T12:32:23.144Z",
+      "reviewStatus": "confirmed",
+      "confirmedAt": "2026-09-07T12:32:23.144Z"
     }
   ]
 }

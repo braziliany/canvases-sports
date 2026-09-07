@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "adapter": "xinhua-daily-wechat-week20-final-report-v1",
+  "source": {
+    "name": "新华日报微信公众号（扬子晚报转载）",
+    "type": "official-republish",
+    "url": "https://www.yzwb.net/news/qjsc/202609/t20260905_389881.html",
+    "retrievedAt": "2026-09-07T12:32:23.144Z"
+  },
+  "context": {
+    "leagueId": "jiangsu-city-football-league",
+    "season": 2026,
+    "round": 20,
+    "date": "2026-09-05"
+  },
+  "title": "“苏超”积分榜更新！无锡队盐城队宿迁队暂列前三",
+  "contentHash": "e88170bd5ed6dba9006974a459dc13c833866f72d8612896b441a8915e592cb5",
+  "rawText": "“苏超”积分榜更新！无锡队盐城队宿迁队暂列前三\n来源： 新华日报微信公众号\n2026-09-05 22:23:00\n2026江苏省城市足球联赛\n第20周比赛结束\n最终\n连云港队0:1南通队\n盐城队1:1徐州队\n南京队2:2泰州队\n“苏超”最新积分榜出炉\n一起来看看\n⬇️\n/strip/ignore-error/1|imageslim\"/>\n/strip/ignore-error/1|imageslim\"/>\n友情链接: 中国网信网 新华网 人民网 中国江苏网 新华报业网 乡村干部报网 江南时报 中国晚报摄影学会网 中国禁毒网\n报纸广告服务 新媒体广告服务 技术服务 中国互联网举报中心\n地址：南京市建邺区江东中路369号新华报业传媒广场 邮编：210092 联系我们:025-96096(24小时)\n互联网新闻信息服务许可证32120170004 视听节目许可证1008318号 广播电视节目制作经营许可证苏字第394号\n版权所有 江苏扬子晚报有限公司\n苏ICP备13020714号 | 电信增值业务经营许可证 苏B2-20253490"
+}

@@ -8,16 +8,26 @@ import {
   parseHuaianPoliceResult,
   parseYangzhouReleaseResult
 } from "../src/adapters/results/official-local-government.js";
+import {
+  parseNanjingMorningPostWeek20Results,
+  parseXinhuaDailyWechatWeek20Results
+} from "../src/adapters/results/week20-final-reports.js";
 import { evaluateGitSyncGate } from "../src/core/git-sync-gate.js";
 import { prepareProductionResultSync } from "../src/core/production-result-sync.js";
 import { RECONCILIATION_STATUS, reconcileResultObservations } from "../src/core/result-reconciliation.js";
 import { SourceFetchError, fetchSourceSnapshot } from "../src/core/source-fetch.js";
-import { createUnsettledWeek19Fixtures } from "./helpers/result-fixtures.js";
+import {
+  createUnsettledRoundFixtures,
+  createUnsettledWeek19Fixtures
+} from "./helpers/result-fixtures.js";
 
 const fixtures = JSON.parse(await readFile(new URL("../data/fixtures.json", import.meta.url), "utf8"));
 const baseline = JSON.parse(await readFile(new URL("../data/sources/jiangsu-2026-08-22.json", import.meta.url), "utf8"));
 const rankingReference = JSON.parse(await readFile(new URL(
   "../data/sources/results/2026-08-29-w19-official-standings-reference.json", import.meta.url
+), "utf8"));
+const week20RankingReference = JSON.parse(await readFile(new URL(
+  "../data/sources/results/2026-09-05-w20-official-standings-reference.json", import.meta.url
 ), "utf8"));
 const yangtzeSnapshot = JSON.parse(await readFile(new URL(
   "../data/sources/results/2026-08-29-w19-yangzi-evening-news.json", import.meta.url
@@ -163,6 +173,77 @@ test("zero scores remain valid evidence", () => {
   const result = reconcileResultObservations({ observations: [observation({ homeScore: 0, awayScore: 0, source: "官方来源", sourceType: "official", sourceUrl: "https://official.test.invalid/result" })], fixturesData: unsettledFixtures(), sourcePolicies });
   assert.deepEqual(result.decisions[0].score, [0, 0]);
   assert.equal(result.decisions[0].status, RECONCILIATION_STATUS.AUTO_SETTLE);
+});
+
+test("week 20 reports reconcile through the existing pipeline and match every public table field", () => {
+  const xinhuaSnapshot = {
+    schemaVersion: 1,
+    adapter: "xinhua-daily-wechat-week20-final-report-v1",
+    source: {
+      name: "新华日报微信公众号（扬子晚报转载）",
+      type: "official-republish",
+      url: "https://www.yzwb.net/news/qjsc/202609/t20260905_389881.html",
+      retrievedAt: "2026-09-05T14:23:00Z"
+    },
+    context: { leagueId: fixtures.league.id, season: 2026, round: 20, date: "2026-09-05" },
+    rawText: "连云港队0:1南通队\n盐城队1:1徐州队\n南京队2:2泰州队"
+  };
+  const morningSnapshot = {
+    schemaVersion: 1,
+    adapter: "nanjing-morning-post-week20-final-report-v1",
+    source: {
+      name: "南京晨报（新浪财经转载）",
+      type: "trusted-media",
+      url: "https://finance.sina.com.cn/jjxw/2026-09-07/doc-iniqxiqs6133523.shtml",
+      retrievedAt: "2026-09-07T00:30:00Z"
+    },
+    context: xinhuaSnapshot.context,
+    rawText: "南京队和泰州队赛前合影。终场哨响，两队最终以2比2握手言和。\n第20周落幕，盐城队1比1战平徐州队，连云港队0比1不敌南通队。"
+  };
+  const observations = [
+    ...parseXinhuaDailyWechatWeek20Results(xinhuaSnapshot),
+    ...parseNanjingMorningPostWeek20Results(morningSnapshot)
+  ];
+  const sourcePolicies = [
+    { ...xinhuaSnapshot.source, publisherId: "xinhua-daily-media-group" },
+    { ...morningSnapshot.source, publisherId: "nanjing-daily-media-group" }
+  ];
+  const prepared = prepareProductionResultSync({
+    source: baseline,
+    rankingReference: [rankingReference, week20RankingReference],
+    fixturesData: createUnsettledRoundFixtures(fixtures, 20),
+    candidatesData: candidateData(),
+    observations,
+    confirmedAt: "2026-09-07T01:00:00Z",
+    sourcePolicies
+  });
+
+  const week20 = prepared.fixturesData.fixtures.filter((item) => item.round === 20);
+  assert.deepEqual(week20.map((item) => [item.homeTeam, item.homeScore, item.awayScore, item.awayTeam, item.status]), [
+    ["连云港", 0, 1, "南通", "finished"],
+    ["盐城", 1, 1, "徐州", "finished"],
+    ["南京", 2, 2, "泰州", "finished"]
+  ]);
+  assert.equal(prepared.settlements.length, 6);
+  assert.equal(prepared.candidatesData.candidates.every((item) => item.reviewStatus === "confirmed"), true);
+  assert.deepEqual(
+    prepared.standingsData.standings.map((row) => ({
+      rank: row.rank,
+      team: row.team.name,
+      played: row.played,
+      won: row.won,
+      drawn: row.drawn,
+      lost: row.lost,
+      goalsFor: row.goalsFor,
+      goalsAgainst: row.goalsAgainst,
+      goalDifference: row.goalDifference,
+      points: row.points
+    })),
+    week20RankingReference.rows.map((row) => ({
+      ...row,
+      goalDifference: row.goalsFor - row.goalsAgainst
+    }))
+  );
 });
 
 test("git publication gate requires changes, validation, and tests", () => {
