@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "node scripts/dev-server.mjs",
     "fixtures:normalize": "node scripts/normalize-fixtures.mjs",
+    "fixtures:sync": "node scripts/sync-fixtures.mjs",
     "results:add": "node scripts/add-result-candidate.mjs",
     "results:discover": "node scripts/discover-results.mjs",
     "results:sync": "node scripts/sync-results.mjs",

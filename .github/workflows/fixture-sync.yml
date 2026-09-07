@@ -1,4 +1,4 @@
-name: Result data sync
+name: Fixture presentation sync
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
     branches:
       - codex/effective-status
   schedule:
-    - cron: "*/30 11-16 * * 6"
+    - cron: "40 11 * * *"
 
 permissions:
   contents: write
@@ -29,13 +29,13 @@ jobs:
           cache: npm
 
       - run: npm ci
-      - run: npm run results:sync
+      - run: npm run fixtures:sync
       - run: npm run standings:build
       - run: npm run validate
       - run: npm test
       - run: git diff --check
 
-      - name: Publish validated data changes
+      - name: Publish validated fixture projection
         shell: bash
         run: |
           if [ -z "$(git status --porcelain -- data)" ]; then
@@ -50,5 +50,5 @@ jobs:
             echo "No staged data changes to publish."
             exit 0
           fi
-          git commit -m "chore(data): sync confirmed match results"
+          git commit -m "chore(data): refresh fixture presentation"
           git push origin "HEAD:${GITHUB_REF_NAME}"

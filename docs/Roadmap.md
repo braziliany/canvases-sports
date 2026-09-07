@@ -35,12 +35,15 @@
 - ✅ 重复发现抑制、多来源/冲突 Candidate 共存与人工 `ADD` 闸门
 - ⏳ 完整历史 fixtures、公平竞赛积分与抽签顺序
 - ✅ 第 19 周在线来源获取、调度与发布编排
+- ✅ 第 19–22 周正式赛历、逐场 provenance 与 9/5、9/12 组委会公告复核
+- ✅ `displayFixtures` 当前比赛周投影与提前 24 小时确定性切换
+- ✅ 独立 Fixture Presentation Sync，不依赖 Result Pipeline 推进展示时间
 
 继续复用 `Repeat Each → Create View → Chained Update → Repeat Results → Grid.Children`，不设计第二套动态列表机制。
 
 状态：**Canvases Sports v0.2 production data pipeline complete; awaiting device acceptance**。
 
-生产收尾：✅ 4 个受控来源 / 4 个独立 publisher identity；✅ 稳定 Snapshot；✅ 保守 reconciliation；✅ 自动结算与 standings 派生；✅ GitHub Actions 按变化发布。后续仍需扩展新比赛周来源配置与完整历史 fixtures。
+生产收尾：✅ 4 个受控赛果来源 / 4 个独立 publisher identity；✅ 稳定 Snapshot；✅ 保守 reconciliation；✅ 自动结算与 standings 派生；✅ 第 19–22 周赛历与 current-fixture 派生；✅ GitHub Actions 按变化发布。后续仍需扩展新比赛周来源配置与完整历史 fixtures。
 
 ## v0.3 — 赛事入口页
 

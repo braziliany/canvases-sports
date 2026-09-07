@@ -61,7 +61,7 @@ Official fixture announcements
 Fixtures Schema + Validation + Effective Status Normalizer
         ↓
 data/fixtures.json
-        ├─→ iOS Shortcut → match-row Template → Widget
+        ├─→ displayFixtures → iOS Shortcut → match-row Template → Widget
         └─→ Standings Calculator → data/standings.json → standings Shortcut
 
 Reviewed result observation
@@ -142,6 +142,11 @@ of the Canvases architecture.
 production Shortcut default.
 Fixtures retain source `status`; the Shortcut displays normalized
 `effectiveStatus`. Time may derive `scheduled → live`, never `live → finished`.
+Canonical `fixtures` retains weeks 19–22 and historical results; the fixture
+Shortcut repeats the derived `displayFixtures` projection. The deterministic
+selector keeps the current/recent week until 24 hours before the next kickoff.
+`npm run fixtures:sync -- --dry-run` previews time-driven projection changes;
+the dedicated fixture workflow publishes only validated semantic changes.
 Only fixtures with source `status: finished` and two real scores enter standings
 settlement. The current builder uses a reviewed 2026-08-22 carry-forward baseline
 and an official 2026-08-29 ranking cross-check until full-season fixtures are backfilled.
@@ -164,6 +169,7 @@ command validates and tests the complete settlement before committing all data
 files together, with rollback on write failure.
 Fixtures are transcribed only from reviewed sources; unknown venues remain
 `null`. Run `npm run validate` and `npm test` after every data change.
+See [Current Fixture Selection](docs/v0.2-current-fixture-selection.md).
 
 ## Screenshots
 

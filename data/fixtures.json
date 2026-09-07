@@ -6,8 +6,8 @@
     "shortName": "苏超",
     "season": 2026
   },
-  "updatedAt": "2026-09-05T21:57:58.489Z",
-  "effectiveStatusAt": "2026-09-05T21:58:54.476Z",
+  "updatedAt": "2026-09-06T00:15:00.000Z",
+  "effectiveStatusAt": "2026-09-07T11:32:33.926Z",
   "source": {
     "name": "江苏省足球运动协会正式赛历",
     "type": "official-schedule",
@@ -15,7 +15,7 @@
     "publishedAt": "2026-02-11T11:49:00+08:00",
     "method": "human-reviewed-transcription",
     "scope": "2026常规赛第19至22周",
-    "notes": "日期、场序与对阵来自江苏省足球运动协会正式赛历；第20周由组委会购票公告复核，第20周19:40开球由交汇点当日预告复核；常规赛周六19:40开球规则由交汇点赛季报道复核。"
+    "notes": "日期、场序与对阵来自江苏省足球运动协会正式赛历；第20周和第21周由组委会购票公告复核，第20周19:40开球由交汇点当日预告复核；常规赛周六19:40开球规则由交汇点赛季报道复核。"
   },
   "scheduleSources": [
     {
@@ -48,6 +48,14 @@
       "type": "authoritative-media-preview",
       "url": "https://www.xhby.net/content/s6a9b714de4b027d1d0a3b6e1.html",
       "publishedAt": "2026-09-05T09:33:00+08:00",
+      "method": "human-reviewed-transcription"
+    },
+    {
+      "id": "w21-organizer-ticket-announcement",
+      "name": "江苏省城市足球联赛组委会",
+      "type": "official-announcement",
+      "url": "https://www.xhby.net/content/s6a9cb0b1e4b0f3986ee88ee0.html",
+      "publishedAt": "2026-09-06T08:15:00+08:00",
       "method": "human-reviewed-transcription"
     },
     {
@@ -266,6 +274,7 @@
       "provenance": {
         "sourceId": "jsfa-2026-regular-calendar",
         "corroboratedBy": [
+          "w21-organizer-ticket-announcement",
           "xhby-2026-regular-kickoff-rule"
         ]
       }
@@ -286,6 +295,7 @@
       "provenance": {
         "sourceId": "jsfa-2026-regular-calendar",
         "corroboratedBy": [
+          "w21-organizer-ticket-announcement",
           "xhby-2026-regular-kickoff-rule"
         ]
       }
@@ -306,6 +316,7 @@
       "provenance": {
         "sourceId": "jsfa-2026-regular-calendar",
         "corroboratedBy": [
+          "w21-organizer-ticket-announcement",
           "xhby-2026-regular-kickoff-rule"
         ]
       }
@@ -326,6 +337,7 @@
       "provenance": {
         "sourceId": "jsfa-2026-regular-calendar",
         "corroboratedBy": [
+          "w21-organizer-ticket-announcement",
           "xhby-2026-regular-kickoff-rule"
         ]
       }
@@ -346,6 +358,7 @@
       "provenance": {
         "sourceId": "jsfa-2026-regular-calendar",
         "corroboratedBy": [
+          "w21-organizer-ticket-announcement",
           "xhby-2026-regular-kickoff-rule"
         ]
       }
@@ -366,6 +379,7 @@
       "provenance": {
         "sourceId": "jsfa-2026-regular-calendar",
         "corroboratedBy": [
+          "w21-organizer-ticket-announcement",
           "xhby-2026-regular-kickoff-rule"
         ]
       }

@@ -8,6 +8,7 @@
 - [Shortcut 构建指南](shortcut.md)
 - [v0.1 Dynamic Standings PoC 归档](v0.1-dynamic-standings-poc.md)
 - [v0.2 Dynamic Fixtures 真机验证归档](v0.2-dynamic-fixtures.md)
+- [v0.2 Current Fixture Selection](v0.2-current-fixture-selection.md)
 - [v0.2 Match Result Settlement](v0.2-match-result-settlement.md)
 - [v0.2 Phase 3 Match Result Ingestion](v0.2-match-result-ingestion.md)
 - [v0.2 Phase 4 ResultCandidate Entry](v0.2-result-candidate-entry.md)

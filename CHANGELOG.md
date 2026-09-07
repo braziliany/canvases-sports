@@ -2,6 +2,9 @@
 
 ## Unreleased — v0.2 production data sync
 
+- Added the reviewed week 19–22 fixture calendar with auditable per-fixture provenance.
+- Added deterministic `displayFixtures` selection and a fail-closed fixture presentation sync workflow.
+- Kept schedule refresh separate from result discovery, reconciliation, and settlement.
 - Added four GitHub-runner-compatible online result fetchers across four explicitly identified publishers with stable provenance snapshots.
 - Prevented same-publisher mirrors or unregistered source labels from satisfying automatic reconciliation.
 - Added conservative multi-source reconciliation and automatic settlement through the existing settlement core.
