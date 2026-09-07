@@ -5,6 +5,7 @@ import { RESULT_ADAPTERS } from "../src/adapters/results/registry.js";
 import { resolveCliDataDirectory } from "../src/core/cli-data-directory.js";
 import { commitJsonFilesAtomically } from "../src/core/json-file-transaction.js";
 import { prepareProductionResultSync } from "../src/core/production-result-sync.js";
+import { canReuseSettledResultSnapshot } from "../src/core/result-source-refresh.js";
 import { fetchSourceSnapshot } from "../src/core/source-fetch.js";
 import { RESULT_SOURCES } from "../src/sources/result-sources.js";
 import { JIANGSU_STANDINGS_REFERENCE_FILES } from "../src/sources/standings-references.js";
@@ -37,7 +38,21 @@ async function main() {
   const snapshots = await Promise.all(RESULT_SOURCES.map(async (config) => {
     const path = resolve(dataSelection.dataDirectory, "sources/results", config.fileName);
     const previousSnapshot = await readOptionalJson(path);
-    return { path, data: await fetchSourceSnapshot(config, { previousSnapshot, now }) };
+    const adapter = RESULT_ADAPTERS.get(config.adapter);
+    if (!adapter) throw new Error(`No adapter registered for ${config.adapter}`);
+    const reuse = canReuseSettledResultSnapshot({
+      config,
+      snapshot: previousSnapshot,
+      adapter,
+      fixturesData
+    });
+    return {
+      path,
+      data: reuse
+        ? previousSnapshot
+        : await fetchSourceSnapshot(config, { previousSnapshot, now }),
+      reused: reuse
+    };
   }));
   const observations = snapshots.flatMap(({ data }) => {
     const adapter = RESULT_ADAPTERS.get(data.adapter);
@@ -49,7 +64,8 @@ async function main() {
     sourcePolicies: RESULT_SOURCES
   });
 
-  console.log(`Fetched ${snapshots.length} trusted sources.`);
+  console.log(`Loaded ${snapshots.length} trusted sources.`);
+  console.log(`Reused ${snapshots.filter(({ reused }) => reused).length} settled source snapshots.`);
   console.log(`Parsed ${observations.length} observations.`);
   for (const decision of prepared.reconciliation.decisions) {
     console.log(`${decision.status}: ${decision.fixtureId} ${decision.score?.join(":") ?? "-"} (${decision.reason})`);
@@ -81,4 +97,15 @@ async function main() {
   console.log(`Committed ${changedEntries.length} data files transactionally.`);
 }
 
-main().catch((error) => { console.error(error.stack ?? error.message); process.exitCode = 1; });
+main().catch((error) => {
+  const detail = error.stack ?? error.message;
+  console.error(detail);
+  if (process.env.GITHUB_ACTIONS === "true") {
+    const annotation = String(detail)
+      .replaceAll("%", "%25")
+      .replaceAll("\r", "%0D")
+      .replaceAll("\n", "%0A");
+    console.error(`::error title=Result sync failed::${annotation}`);
+  }
+  process.exitCode = 1;
+});

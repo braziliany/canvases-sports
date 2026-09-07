@@ -16,6 +16,8 @@ import { evaluateGitSyncGate } from "../src/core/git-sync-gate.js";
 import { prepareProductionResultSync } from "../src/core/production-result-sync.js";
 import { RECONCILIATION_STATUS, reconcileResultObservations } from "../src/core/result-reconciliation.js";
 import { SourceFetchError, fetchSourceSnapshot } from "../src/core/source-fetch.js";
+import { canReuseSettledResultSnapshot } from "../src/core/result-source-refresh.js";
+import { RESULT_SOURCES } from "../src/sources/result-sources.js";
 import {
   createUnsettledRoundFixtures,
   createUnsettledWeek19Fixtures
@@ -85,6 +87,30 @@ test("fetch layer fails closed on network, non-200, and unexpected content", asy
   await assert.rejects(fetchSourceSnapshot(config, { fetchImpl: async () => { throw new Error("offline"); } }), SourceFetchError);
   await assert.rejects(fetchSourceSnapshot(config, { fetchImpl: async () => new Response("no", { status: 503, headers: { "content-type": "text/html" } }) }), /HTTP 503/);
   await assert.rejects(fetchSourceSnapshot(config, { fetchImpl: async () => new Response("<p>other</p>", { status: 200, headers: { "content-type": "text/html" } }) }), /missing marker/);
+});
+
+test("settled historical snapshots are reusable but unsettled or conflicting facts require refresh", () => {
+  const config = RESULT_SOURCES.find((item) => item.id === "yangtze-evening-news");
+  assert.equal(canReuseSettledResultSnapshot({
+    config,
+    snapshot: yangtzeSnapshot,
+    adapter: parseYangtzeEveningNewsResults,
+    fixturesData: fixtures
+  }), true);
+  assert.equal(canReuseSettledResultSnapshot({
+    config,
+    snapshot: yangtzeSnapshot,
+    adapter: parseYangtzeEveningNewsResults,
+    fixturesData: unsettledFixtures()
+  }), false);
+  const conflicting = structuredClone(fixtures);
+  conflicting.fixtures.find((item) => item.id === "2026-regular-w19-changzhou-wuxi").homeScore = 2;
+  assert.equal(canReuseSettledResultSnapshot({
+    config,
+    snapshot: yangtzeSnapshot,
+    adapter: parseYangtzeEveningNewsResults,
+    fixturesData: conflicting
+  }), false);
 });
 
 test("three controlled local-government snapshots parse the authoritative 8/29 scores offline", () => {
