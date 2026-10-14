@@ -2,6 +2,9 @@
 
 ## Unreleased — v0.2 production data sync
 
+- Added a runtime fixture presentation contract so current-round selection advances with device time rather than the last JSON build.
+- Marked persisted `effectiveStatus` and `display*` values as legacy build-time previews and migrated the documented Shortcut input to canonical `fixtures`.
+- Added frozen-payload regressions for the 2026-09-11 field failure and the week-21/week-22 boundaries.
 - Added the reviewed week 19–22 fixture calendar with auditable per-fixture provenance.
 - Added deterministic `displayFixtures` selection and a fail-closed fixture presentation sync workflow.
 - Kept schedule refresh separate from result discovery, reconciliation, and settlement.

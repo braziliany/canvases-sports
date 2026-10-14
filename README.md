@@ -61,7 +61,8 @@ Official fixture announcements
 Fixtures Schema + Validation + Effective Status Normalizer
         ↓
 data/fixtures.json
-        ├─→ displayFixtures → iOS Shortcut → match-row Template → Widget
+        ├─→ canonical fixtures → runtime projection in iOS Shortcut → match-row Template → Widget
+        ├─→ legacy displayFixtures (build-time preview only)
         └─→ Standings Calculator → data/standings.json → standings Shortcut
 
 Reviewed result observation
@@ -140,13 +141,15 @@ of the Canvases architecture.
 `data/standings.json` and `data/fixtures.json` are stable client contracts.
 `data/fixtures-device-test.json` is synthetic device-test data and is never the
 production Shortcut default.
-Fixtures retain source `status`; the Shortcut displays normalized
-`effectiveStatus`. Time may derive `scheduled → live`, never `live → finished`.
-Canonical `fixtures` retains weeks 19–22 and historical results; the fixture
-Shortcut repeats the derived `displayFixtures` projection. The deterministic
-selector keeps the current/recent week until 24 hours before the next kickoff.
-`npm run fixtures:sync -- --dry-run` previews time-driven projection changes;
-the dedicated fixture workflow publishes only validated semantic changes.
+Fixtures retain source `status`; the Shortcut derives the display status at
+runtime. Time may derive `scheduled → live`, never `live → finished`.
+Canonical `fixtures` retains weeks 19–22 and historical results. The fixture
+Shortcut must derive its current round from `fixtures` and the device execution
+time on every run. The deterministic selector keeps the current/recent week
+until 24 hours before the next kickoff. Persisted `effectiveStatus` and
+`display*` fields are backward-compatible build-time previews, not production
+truth. `npm run fixtures:sync -- --dry-run` may refresh those legacy previews,
+but time-based round switching must not depend on a Git commit or workflow run.
 Only fixtures with source `status: finished` and two real scores enter standings
 settlement. The current builder uses a reviewed 2026-08-22 carry-forward baseline
 and selects the official ranking cross-check whose finished-fixture set exactly

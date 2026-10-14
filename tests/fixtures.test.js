@@ -25,6 +25,13 @@ const deviceFixtureData = JSON.parse(
 test("fixtures.json passes the fixtures schema", () => {
   const validated = validateFixtures(publishedFixtureData);
   assert.equal(validated.fixtures.length, 18);
+  assert.deepEqual(validated.runtimePresentation, {
+    mode: "runtime-derived",
+    sourceField: "fixtures",
+    timeZone: "Asia/Shanghai",
+    nextRoundLeadHours: 24,
+    legacyPreview: "build-time-only"
+  });
   assert.equal(validated.displayRound, 20);
   assert.deepEqual(
     validated.displayFixtures.map(({ homeTeam, awayTeam }) => [homeTeam, awayTeam]),
@@ -36,6 +43,12 @@ test("fixtures.json passes the fixtures schema", () => {
   );
   assert.equal(validated.scheduleSources[0].type, "official-schedule");
   assert.equal(validated.fixtures.every((fixture) => fixture.provenance), true);
+});
+
+test("rejects an unsupported runtime presentation policy", () => {
+  const invalid = structuredClone(publishedFixtureData);
+  invalid.runtimePresentation.timeZone = "UTC";
+  assert.throws(() => validateFixtures(invalid), FixturesValidationError);
 });
 
 test("rejects fixture provenance that does not resolve to a reviewed schedule source", () => {

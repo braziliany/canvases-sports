@@ -6,11 +6,33 @@
 
 创建 iOS Shortcut：`Canvases Sports · 更新苏超`。它从公开 GitHub Raw JSON 获取经校验的积分榜，构建 13 个 `team-row` 模板实例，并一次性写入 `standings-grid`。
 
+同一 Shortcut 的赛程段必须读取 `fixtures.json` 的 canonical `fixtures`，使用本次设备时间选择当前轮，不能读取根级 legacy `displayFixtures` 作为生产真值。
+
 数据 URL：
 
 ```text
 https://raw.githubusercontent.com/braziliany/canvases-sports/main/data/standings.json
 ```
+
+赛程 URL：
+
+```text
+https://raw.githubusercontent.com/braziliany/canvases-sports/main/data/fixtures.json
+```
+
+## 赛程运行时选择（v0.2 必须迁移）
+
+1. 获取赛程 JSON，读取 `fixtures` 和 `runtimePresentation`；确认 `mode = runtime-derived`、`timeZone = Asia/Shanghai`、`nextRoundLeadHours = 24`。
+2. 获取一次 Current Date，保存为本次执行的固定 `now`，后续所有比较复用它。
+3. fixtures 已按 kickoff 排序。逐项读取 ISO `kickoff`，减去 24 小时；凡 `now >= transitionAt`，把该项 `round` 设为候选轮。扫描完成后候选轮即当前轮；若全部未进入窗口，则使用第一项 round。
+4. 过滤 `round = 当前轮` 得到 selected fixtures，作为 `match-row` Repeat 输入。
+5. 每场状态：`finished/postponed/cancelled/live` 原样映射；只有 `scheduled` 且 `now >= kickoff` 时显示 `live`。禁止用比赛时长推导 `finished`。
+6. 比分继续使用完整字段存在性判断：双方都是非负整数（包括 0）才显示 `homeScore : awayScore`，否则显示 `VS`。
+7. 每个 `match-row` 的 Update 必须显式接收前一个 Updated View；最终 Repeat Results 一次写入 `fixtures-grid.Children`。随后继续原 standings 更新链，不能要求第二次运行。
+
+旧根级 `displayRound/displayFixtures/displaySelectionReason` 是 `effectiveStatusAt` 时刻的构建预览，只用于诊断和迁移兼容。设备端不得用它们决定当前赛程。
+
+迁移验收以 `tests/fixtures/runtime-presentation-scenarios.json` 为共享场景合同；自动测试和真机检查必须使用同一组 `now`、期望轮次及第 21 周六场清单。
 
 不使用 Token、Cookie、江苏体育局 HTML 或 OCR。
 

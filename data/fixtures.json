@@ -8,6 +8,13 @@
   },
   "updatedAt": "2026-09-07T12:32:23.144Z",
   "effectiveStatusAt": "2026-09-07T12:40:43.567Z",
+  "runtimePresentation": {
+    "mode": "runtime-derived",
+    "sourceField": "fixtures",
+    "timeZone": "Asia/Shanghai",
+    "nextRoundLeadHours": 24,
+    "legacyPreview": "build-time-only"
+  },
   "source": {
     "name": "江苏省足球运动协会正式赛历",
     "type": "official-schedule",

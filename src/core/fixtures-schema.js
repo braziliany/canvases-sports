@@ -2,6 +2,7 @@ import {
   deriveEffectiveStatus,
   fixtureKickoffInstant,
   FIXTURE_STATUSES,
+  RUNTIME_PRESENTATION_POLICY,
   selectCurrentFixtures
 } from "./fixture-state.js";
 
@@ -81,6 +82,16 @@ function validateScheduleSources(data, issues) {
   return ids;
 }
 
+function validateRuntimePresentation(data, issues) {
+  if (data.runtimePresentation === undefined) return;
+  const policy = data.runtimePresentation;
+  for (const [field, expected] of Object.entries(RUNTIME_PRESENTATION_POLICY)) {
+    if (policy?.[field] !== expected) {
+      issues.push(`runtimePresentation.${field} must equal ${JSON.stringify(expected)}`);
+    }
+  }
+}
+
 export function sortFixturesChronologically(fixtures) {
   return structuredClone(fixtures).sort((left, right) =>
     fixtureSortKey(left).localeCompare(fixtureSortKey(right)) || left.id.localeCompare(right.id)
@@ -109,6 +120,7 @@ export function validateFixtures(data) {
   if (!effectiveStatusAtIsValid) issues.push("effectiveStatusAt must be ISO-8601");
   if (!Array.isArray(data.fixtures)) issues.push("fixtures must be an array");
   const scheduleSourceIds = validateScheduleSources(data, issues);
+  validateRuntimePresentation(data, issues);
 
   const ids = new Set();
   let previousSortKey = null;

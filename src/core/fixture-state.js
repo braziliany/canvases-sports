@@ -6,6 +6,13 @@ export const FIXTURE_STATUSES = Object.freeze([
 ]);
 const SUPPORTED_STATUSES = new Set(FIXTURE_STATUSES);
 export const DISPLAY_ROUND_LEAD_HOURS = 24;
+export const RUNTIME_PRESENTATION_POLICY = Object.freeze({
+  mode: "runtime-derived",
+  sourceField: "fixtures",
+  timeZone: "Asia/Shanghai",
+  nextRoundLeadHours: DISPLAY_ROUND_LEAD_HOURS,
+  legacyPreview: "build-time-only"
+});
 
 const TIME_ZONE_OFFSETS = Object.freeze({
   "Asia/Shanghai": "+08:00"
@@ -52,6 +59,13 @@ export function deriveScoreState(fixture) {
     hasScore,
     score: hasScore ? `${fixture.homeScore} : ${fixture.awayScore}` : null
   };
+}
+
+function deriveFixtureStatuses(fixtures, { now, timeZone }) {
+  return fixtures.map((fixture) => ({
+    ...structuredClone(fixture),
+    effectiveStatus: deriveEffectiveStatus(fixture, { now, timeZone })
+  }));
 }
 
 export function selectCurrentFixtures(
@@ -123,21 +137,48 @@ export function selectCurrentFixtures(
   };
 }
 
+/**
+ * Derive the complete fixture presentation from canonical facts at request time.
+ * The input is never mutated and any persisted display/effective fields are ignored.
+ */
+export function deriveRuntimeFixturePresentation(
+  data,
+  {
+    now = new Date(),
+    timeZone = data.runtimePresentation?.timeZone ?? RUNTIME_PRESENTATION_POLICY.timeZone,
+    leadHours = data.runtimePresentation?.nextRoundLeadHours ?? DISPLAY_ROUND_LEAD_HOURS
+  } = {}
+) {
+  const derivedAt = parseInstant(now, "now").toISOString();
+  const fixtures = deriveFixtureStatuses(data.fixtures, { now: derivedAt, timeZone });
+  const selection = selectCurrentFixtures(
+    { fixtures },
+    { now: derivedAt, timeZone, leadHours }
+  );
+
+  return {
+    derivedAt,
+    timeZone,
+    ...selection
+  };
+}
+
 export function normalizeFixtureStatuses(
   data,
   { now = new Date(), timeZone = "Asia/Shanghai" } = {}
 ) {
-  const effectiveStatusAt = parseInstant(now, "now").toISOString();
+  const projection = deriveRuntimeFixturePresentation(data, { now, timeZone });
+  const effectiveStatusAt = projection.derivedAt;
+  const fixtures = deriveFixtureStatuses(data.fixtures, { now: effectiveStatusAt, timeZone });
   const normalized = {
     ...structuredClone(data),
     effectiveStatusAt,
-    fixtures: data.fixtures.map((fixture) => ({
-      ...fixture,
-      effectiveStatus: deriveEffectiveStatus(fixture, { now: effectiveStatusAt, timeZone })
-    }))
+    fixtures
   };
   return {
     ...normalized,
-    ...selectCurrentFixtures(normalized, { now: effectiveStatusAt, timeZone })
+    displayRound: projection.displayRound,
+    displaySelectionReason: projection.displaySelectionReason,
+    displayFixtures: projection.displayFixtures
   };
 }

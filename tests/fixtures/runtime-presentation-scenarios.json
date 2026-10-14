@@ -1,0 +1,51 @@
+{
+  "source": "data/fixtures.json frozen at 2026-09-07",
+  "timeZone": "Asia/Shanghai",
+  "nextRoundLeadHours": 24,
+  "scenarios": [
+    {
+      "id": "frozen-build-time",
+      "now": "2026-09-07T20:00:00+08:00",
+      "displayRound": 20,
+      "effectiveStatus": "finished"
+    },
+    {
+      "id": "before-week-21-window",
+      "now": "2026-09-11T19:39:00+08:00",
+      "displayRound": 20,
+      "effectiveStatus": "finished"
+    },
+    {
+      "id": "week-21-window-boundary",
+      "now": "2026-09-11T19:40:00+08:00",
+      "displayRound": 21,
+      "effectiveStatus": "scheduled"
+    },
+    {
+      "id": "field-reproduction",
+      "now": "2026-09-11T20:11:00+08:00",
+      "displayRound": 21,
+      "effectiveStatus": "scheduled"
+    },
+    {
+      "id": "week-21-matchday-before-kickoff",
+      "now": "2026-09-12T18:00:00+08:00",
+      "displayRound": 21,
+      "effectiveStatus": "scheduled"
+    },
+    {
+      "id": "week-21-in-progress",
+      "now": "2026-09-12T20:11:00+08:00",
+      "displayRound": 21,
+      "effectiveStatus": "live"
+    }
+  ],
+  "fieldReproductionFixtures": [
+    ["宿迁", "泰州"],
+    ["盐城", "南通"],
+    ["南京", "镇江"],
+    ["无锡", "扬州"],
+    ["徐州", "淮安"],
+    ["常州", "苏州"]
+  ]
+}

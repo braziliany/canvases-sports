@@ -25,3 +25,5 @@ Phase 5 将固定权威转载快照解析为 Observation，再经严格 fixture 
 生产同步仅在受控 official 无冲突，或两个不同 `publisherId` 的可信发布者一致时自动跨越 Candidate → Fact，并继续复用既有 settlement 与 standings builder。异常仍由人工处理。
 
 第 20 周三场真实赛果已由两个独立 publisher identity 完成自动结算；A–K season-flow 回归冻结第 20 周至常规赛结束的展示切换合同。
+
+Current Fixture Selection 已改为 runtime contract：canonical fixtures 保持静态，设备每次运行根据 Asia/Shanghai kickoff 重新选择当前轮；根级 `display*` 仅为旧客户端 build-time preview。
